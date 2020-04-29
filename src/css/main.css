@@ -193,12 +193,6 @@ img[src=""] {
 .none {
     display: none;
 }
-.t-c {
-    text-align: center;
-}
-.p-b-100 {
-    padding-bottom: 100px;
-}
 
 
 .btn {
@@ -232,20 +226,6 @@ img[src=""] {
 	-webkit-app-region: no-drag;
 }
 
-.embed-container { 
-    position: relative; 
-    padding-bottom: 56.25%; 
-    height: 0; 
-    overflow: hidden; 
-    max-width: 100%; 
-} 
-.embed-container iframe, .embed-container object, .embed-container embed { 
-    position: absolute; 
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: 100%; 
-}
 
 
 .single {
@@ -383,30 +363,6 @@ img[src=""] {
     background-color: var(--mainBG);
 }
 
-.feed .post-list, .feed .post-list:hover {
-    background-color: unset;
-    box-shadow: unset;
-}
-
-.feed .post-list {
-    border-right: 3px solid var(--themeColor);
-    border-radius: 0px;
-    margin: unset;
-    padding: 25px 75px;
-}
-.feed .title {
-    position: relative;
-    padding-bottom: 75px;
-}
-.feed .title:before {
-    content: attr(data-date);
-    background: var(--themeColor);
-    color: var(--listTitleText);
-    right: -75px;
-    position: absolute;
-    padding: 5px 25px;
-}
-
 .main-list-pagination {
     display: grid;
     grid-template-columns: minmax(300px, 900px);
@@ -461,7 +417,7 @@ img[src=""] {
     visibility: visible;
     background-color: var(--headBG);
     box-shadow: 0 2px 6px 0 rgba(0,0,0,.12);
-    z-index: 3;
+    z-index: 2;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 .header-navbar .sticky .logo {
@@ -896,7 +852,6 @@ img[src=""] {
     background-color: var(--relatedBg);
     color: var(--colorDark);
     box-shadow: 0 5px 45px rgba(0, 0, 0, 0.05);
-    z-index: 2;
 }
 .related-content {
     display: grid;
@@ -983,7 +938,6 @@ img[src=""] {
 
     background-color: var(--footerBG);
     color: var(--footerText);
-    z-index: 2;
 }
 
 .footer-nav {
@@ -1084,30 +1038,8 @@ img[src=""] {
     -o-animation: fadein .5s; 
     animation: fadein .5s;
 }
-.main .share {
-    visibility: hidden;
-    display: none;
-}
-.main .share li a {
-    background: unset;
-}
-.content-share {
-    position: fixed;
-    bottom: 0px;
-    background: white;
-    width: 100%;
-    right: 0px;
-    text-align: center;
-    box-shadow: 0 2px 6px 0 rgba(0,0,0,.12);
-    z-index: 1;
-    border-bottom: 1px solid rgba(0,0,0,.1);
-    transition: all ease 1s;
-    transform: translateY(0px);
-}
-.content-share.none {
-    display: inherit;
-    transform: translateY(50px);
-}
+
+
 
 @media screen and (min-width: 1110px) {
     .main-content img {
@@ -1128,16 +1060,6 @@ img[src=""] {
     .main-list-content div  {
         padding: 50px;
     }
-
-    .feed .post-list {
-        padding: 25px 45px;
-    }
-    .feed .title:before {
-        right: -45px;
-    }
-    .feed .title {
-        padding-bottom: 55px;
-    }
 }
 
 @media screen and (max-width: 770px) {
@@ -1155,14 +1077,6 @@ img[src=""] {
     .header-navbar .sticky .header-menu {
         grid-template-columns: 75px 1fr 25px;
     }
-    .main .share {
-        visibility: visible;
-        display: inline-flex;
-        list-style-type: none;
-        margin: auto;
-        padding-inline-start: 0;
-        padding-top: 10px;
-    }
     .main-list-content {
         margin: 0 0 100px;
     }
@@ -1173,25 +1087,13 @@ img[src=""] {
         border-bottom: 1px solid var(--darkTransparent);
         border-radius: unset;
     }
- 
     .main-list-content div:hover  {
         box-shadow: unset
     }
-    .main-list-content:not(.feed) div:last-child {
+    .main-list-content div:last-child {
         border: unset
     }
     
-    .feed .post-list {
-        padding: 25px 25px;
-        border-bottom: unset;
-    }
-    .feed .title:before {
-        right: -25px;
-    }
-    .feed .title {
-        padding-bottom: 35px;
-    }
-
     .main-list, .main, .related-content {
         font-size: 90%;
     }
@@ -1256,10 +1158,6 @@ img[src=""] {
     }
     .main-list-head, .main-head {
         grid-template-rows: auto minmax(200px,auto);
-    }
-    .post-author .avatar, .post-author .avatar img {
-        height: 48px;
-        width: 48px;
     }
     .footer {
         grid-template-columns: 0 1fr 0;

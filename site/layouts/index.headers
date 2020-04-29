@@ -13,7 +13,6 @@
 {{ $vars := $string | resources.FromString $targetPath }}
 {{ $secureJSS := $vars | resources.Fingerprint "sha384" }}
 
-
 /*
   X-Frame-Options: DENY
   X-XSS-Protection: 1; mode=block
@@ -21,16 +20,12 @@
   Referrer-Policy: no-referrer
   Feature-Policy: accelerometer 'none'; camera 'none'; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; payment 'none'; usb 'none'
   X-Support: https://hilnu.com
-  Link: <https://d33wubrfki0l68.cloudfront.net> rel=preconnect crossorigin; </assets/style/normal/main.min.css> rel=preload as=script; </assets/js/main.min.js> rel=preload as=script;</assets/fonts/vazir/vazir-bold.woff2> rel=preload as=fonts; </assets/fonts/vazir/vazir.woff2> rel=preload as=fonts; </assets/fonts/sahel/sahel-semibold.woff2> rel=preload as=fonts;
-
-  Content-Security-Policy: base-uri 'self'; default-src 'none'; script-src 'self' 'strict-dynamic' '{{ $secureJSD.Data.Integrity }}' '{{ $secureJSS.Data.Integrity }}'; style-src 'self' 'nonce-{{ $secureCSS.Data.Integrity | md5 }}' https://c.disquscdn.com; font-src 'self' data: https://d33wubrfki0l68.cloudfront.net; worker-src 'self'; img-src 'self' data: https://d33wubrfki0l68.cloudfront.net https://c.disquscdn.com https://referrer.disqus.com https://i.ytimg.com; connect-src 'self' https://d33wubrfki0l68.cloudfront.net; media-src 'self' https://d33wubrfki0l68.cloudfront.net; manifest-src 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; frame-src 'self' https://disqus.com https://www.youtube-nocookie.com; upgrade-insecure-requests; block-all-mixed-content;
+  Link: </assets/style/normal/main.min.css> rel=preload as=script; </assets/js/main.min.js> rel=preload as=script;<https://d33wubrfki0l68.cloudfront.net/15d56cd4be22bd72172cea22ca27c0503c2f5dda/00027/assets/fonts/vazir/vazir-bold.woff2> rel=preload as=fonts; <https://d33wubrfki0l68.cloudfront.net/87ef2cf27166cf48e3fb230f6dea79e677daef25/a3993/assets/fonts/vazir/vazir.woff2> rel=preload as=fonts; <https://d33wubrfki0l68.cloudfront.net/948e9ad3d19ae7dba7908b4bc5748b06d3274cfa/373fd/assets/fonts/sahel/sahel-semibold.woff2> rel=preload as=fonts;
+  Content-Security-Policy: base-uri 'self'; default-src 'none'; script-src 'self' 'strict-dynamic' '{{ $secureJSD.Data.Integrity }}' '{{ $secureJSS.Data.Integrity }}'; style-src 'self' 'nonce-{{ $secureCSS.Data.Integrity | md5 }}'; font-src 'self' data: https://d33wubrfki0l68.cloudfront.net; worker-src 'self'; img-src 'self' data: https://d33wubrfki0l68.cloudfront.net; connect-src 'self' https://d33wubrfki0l68.cloudfront.net; media-src 'self' https://d33wubrfki0l68.cloudfront.net; manifest-src 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; frame-src 'self';upgrade-insecure-requests; block-all-mixed-content;
   Cache-Control: public, max-age=0
 
 /posts/*
-  Content-Security-Policy: base-uri 'self'; default-src 'self' https://disqus.com https://c.disquscdn.com; script-src 'self' 'strict-dynamic' '{{ $secureJSD.Data.Integrity }}' '{{ $secureJSS.Data.Integrity }}'; style-src 'self' 'unsafe-inline' https://c.disquscdn.com; font-src 'self' data: https://d33wubrfki0l68.cloudfront.net; worker-src 'self'; img-src 'self' data: https://d33wubrfki0l68.cloudfront.net https://c.disquscdn.com https://i.ytimg.com; connect-src 'self' https://d33wubrfki0l68.cloudfront.net; media-src 'self' https://d33wubrfki0l68.cloudfront.net; manifest-src 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; frame-src 'self' https://disqus.com https://www.youtube-nocookie.com; upgrade-insecure-requests; block-all-mixed-content;
-
-/feed/*
-  Content-Security-Policy: base-uri 'self'; default-src 'self' https://disqus.com https://c.disquscdn.com; script-src 'self' 'strict-dynamic' '{{ $secureJSD.Data.Integrity }}' '{{ $secureJSS.Data.Integrity }}'; style-src 'self' 'unsafe-inline' https://c.disquscdn.com; font-src 'self' data: https://d33wubrfki0l68.cloudfront.net; worker-src 'self'; img-src 'self' data: https://d33wubrfki0l68.cloudfront.net https://c.disquscdn.com https://i.ytimg.com; connect-src 'self' https://d33wubrfki0l68.cloudfront.net; media-src 'self' https://d33wubrfki0l68.cloudfront.net; manifest-src 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; frame-src 'self' https://disqus.com https://www.youtube-nocookie.com; upgrade-insecure-requests; block-all-mixed-content;
+  Content-Security-Policy: base-uri 'self'; default-src 'self' https://disqus.com https://c.disquscdn.com; script-src 'self' 'strict-dynamic' '{{ $secureJSD.Data.Integrity }}' '{{ $secureJSS.Data.Integrity }}'; style-src 'self' 'nonce-{{ $secureCSS.Data.Integrity | md5 }}' https://c.disquscdn.com; font-src 'self' data: https://d33wubrfki0l68.cloudfront.net; worker-src 'self'; img-src 'self' data: https://d33wubrfki0l68.cloudfront.net https://c.disquscdn.com https://referrer.disqus.com; connect-src 'self' https://d33wubrfki0l68.cloudfront.net; media-src 'self' https://d33wubrfki0l68.cloudfront.net; manifest-src 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; frame-src 'self' https://disqus.com; upgrade-insecure-requests; block-all-mixed-content;
 
 
 /.netlify/*
@@ -41,16 +36,21 @@
   Content-Security-Policy: base-uri 'self'; default-src 'self' 'unsafe-inline' 'unsafe-eval' https * data: blob: ws:; upgrade-insecure-requests; block-all-mixed-content;
   Referrer-Policy: no-referrer-when-downgrade
 
+/amp/*
+  Content-Security-Policy: base-uri 'self'; default-src 'self' https://cdn.ampproject.org; script-src 'report-sample' https://cdn.ampproject.org; style-src 'self' 'unsafe-inline'; font-src 'self' data: https://d33wubrfki0l68.cloudfront.net; worker-src 'self'; img-src 'self' data: https://d33wubrfki0l68.cloudfront.net; connect-src 'self' https://cdn.ampproject.org https://d33wubrfki0l68.cloudfront.net; media-src 'self' https://d33wubrfki0l68.cloudfront.net; manifest-src 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; frame-src 'self'; upgrade-insecure-requests; block-all-mixed-content;
+  Referrer-Policy: no-referrer-when-downgrade
+
+/*/amp
+  Content-Security-Policy: base-uri 'self'; default-src 'self' https://cdn.ampproject.org; script-src 'report-sample' https://cdn.ampproject.org; style-src 'self' 'unsafe-inline'; font-src 'self' data: https://d33wubrfki0l68.cloudfront.net; worker-src 'self'; img-src 'self' data: https://d33wubrfki0l68.cloudfront.net; connect-src 'self' https://cdn.ampproject.org https://d33wubrfki0l68.cloudfront.net; media-src 'self' https://d33wubrfki0l68.cloudfront.net; manifest-src 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; frame-src 'self'; upgrade-insecure-requests; block-all-mixed-content;
+  Referrer-Policy: no-referrer-when-downgrade
 
 /*/amp/*
-  Content-Security-Policy: base-uri 'self'; default-src 'self' https://cdn.ampproject.org; script-src 'report-sample' https://cdn.ampproject.org; style-src 'self' 'unsafe-inline'; font-src 'self' data: https://d33wubrfki0l68.cloudfront.net; worker-src 'self'; img-src 'self' data: https://d33wubrfki0l68.cloudfront.net https://i.ytimg.com; connect-src 'self' https://cdn.ampproject.org https://d33wubrfki0l68.cloudfront.net https://*.ampproject.net; media-src 'self' https://d33wubrfki0l68.cloudfront.net; manifest-src 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; frame-src 'self' https://www.youtube.com https://*.ampproject.net; upgrade-insecure-requests; block-all-mixed-content;
+  Content-Security-Policy: base-uri 'self'; default-src 'self' https://cdn.ampproject.org; script-src 'report-sample' https://cdn.ampproject.org; style-src 'self' 'unsafe-inline'; font-src 'self' data: https://d33wubrfki0l68.cloudfront.net; worker-src 'self'; img-src 'self' data: https://d33wubrfki0l68.cloudfront.net; connect-src 'self' https://cdn.ampproject.org https://d33wubrfki0l68.cloudfront.net; media-src 'self' https://d33wubrfki0l68.cloudfront.net; manifest-src 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; frame-src 'self'; upgrade-insecure-requests; block-all-mixed-content;
   Referrer-Policy: no-referrer-when-downgrade
 
 /index.xml 
-  Content-Security-Policy: base-uri 'self'; default-src 'self'; script-src 'none'; style-src 'self' 'unsafe-inline'; font-src 'self' data: https://d33wubrfki0l68.cloudfront.net; worker-src 'self'; img-src 'self' data: https://d33wubrfki0l68.cloudfront.net; connect-src 'self' https://d33wubrfki0l68.cloudfront.net https://platform.twitter.com; media-src 'self' https://d33wubrfki0l68.cloudfront.net; manifest-src 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; frame-src 'self'; upgrade-insecure-requests; block-all-mixed-content;
+  Content-Security-Policy: base-uri 'self'; default-src 'self'; script-src 'none'; style-src 'self' 'unsafe-inline'; font-src 'self' data: https://d33wubrfki0l68.cloudfront.net; worker-src 'self'; img-src 'self' data: https://d33wubrfki0l68.cloudfront.net; connect-src 'self' https://d33wubrfki0l68.cloudfront.net; media-src 'self' https://d33wubrfki0l68.cloudfront.net; manifest-src 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; frame-src 'self'; upgrade-insecure-requests; block-all-mixed-content;
 
-/sitemap.xml 
-  Content-Security-Policy: base-uri 'self'; default-src 'self'; script-src 'none'; style-src 'self' 'unsafe-inline'; font-src 'self' data: https://d33wubrfki0l68.cloudfront.net; worker-src 'self'; img-src 'self' data: https://d33wubrfki0l68.cloudfront.net; connect-src 'self' https://d33wubrfki0l68.cloudfront.net https://platform.twitter.com; media-src 'self' https://d33wubrfki0l68.cloudfront.net; manifest-src 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; frame-src 'self'; upgrade-insecure-requests; block-all-mixed-content;
 
 /uploads/*
   Cache-Control: public, max-age=31536000, immutable

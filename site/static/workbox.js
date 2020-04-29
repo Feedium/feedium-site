@@ -44,7 +44,7 @@ workbox.routing.registerRoute(
 
 const offlinePage = "/offline/index.html";
 
-workbox.routing.registerRoute(/\/posts.|\/feed.|./,
+workbox.routing.registerRoute(/\/posts.|\/articles/,
   async({event}) => {
     try {
       return await workbox.strategies.staleWhileRevalidate({

@@ -1,15 +1,13 @@
 <!DOCTYPE html>
-<html lang="{{ .Site.Params.languageCode }}" dir="{{ .Site.Params.htmlDirection }}" class="no-js">
+<html lang="{{ .Site.Params.languageCode }}" dir="{{ .Site.Params.htmlDirection }}">
 <head>
   {{ partial "normal/head.html" . }}
 </head>
-{{ $color := .Params.config.color | default .Site.Params.color }}
-{{ if eq $color "default" }}{{ $color = .Site.Params.color }}{{ end }}
-<body class="{{if eq .Kind `page` }}single{{else}}list{{end}}" data-theme="{{ $color }}">
+<body class="{{if eq .Kind `page` }}single{{else}}list{{end}}">
   {{ partial "normal/nav.html" . }}
   {{ block "main" . }}{{ end }}
   {{ partial "modules/footer.html" .}}
-  {{/*  {{ block "style" . }}{{ end }}   */}}
+  {{ block "style" . }}{{ end }} 
   {{ partial "normal/script.html" . }}
 </body>
 </html>

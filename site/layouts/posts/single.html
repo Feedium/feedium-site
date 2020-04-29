@@ -17,43 +17,14 @@
         <div class="post-author ">
           <div>
             <div class="avatar">
-                <noscript>
-                    <img 
-                    class="asyncImage loaded"
-                    src='{{ $avatarResized.RelPermalink }}' 
-                    crossorigin="anonymous"
-                    alt='{{ (index .Site.Data.author (printf "%s" .Params.author)).name }}'
-                    aria-label='{{ (index .Site.Data.author (printf "%s" .Params.author)).name }}' 
-                    aria-hidden="true" >                    
-                </noscript>              
-                <picture class="with-js">                 
-                  <source 
-                    type="image/webp"
-                    class="asyncImage"
-                    srcset="/assets/img/avatar.webp"
-                    data-srcset='{{ replace (replace ($avatarResized.RelPermalink) ".png" ".webp") ".jpg" ".webp" }} 72w' 
-                    crossorigin="anonymous"
-                    alt='{{ (index .Site.Data.author (printf "%s" .Params.author)).name }}'
-                    aria-label='{{ (index .Site.Data.author (printf "%s" .Params.author)).name }}' 
-                    aria-hidden="true" >
-                  <source 
-                    type="{{ $avatarResized.MediaType }}"
-                    class="asyncImage"
-                    srcset="/assets/img/avatar.png" 
-                    data-srcset='{{ $avatarResized.RelPermalink }} 72w' 
-                    crossorigin="anonymous"
-                    alt='{{ (index .Site.Data.author (printf "%s" .Params.author)).name }}'
-                    aria-label='{{ (index .Site.Data.author (printf "%s" .Params.author)).name }}' 
-                    aria-hidden="true" >
-                  <img 
-                    class="asyncImage"
-                    src="/assets/img/avatar.png"
-                    data-src='{{ $avatarResized.RelPermalink }}' 
-                    crossorigin="anonymous"
-                    alt='{{ (index .Site.Data.author (printf "%s" .Params.author)).name }}'
-                    aria-label='{{ (index .Site.Data.author (printf "%s" .Params.author)).name }}' 
-                    aria-hidden="true" >
-                </picture>
+                <img 
+                  class="asyncImage"
+                  crossorigin="anonymous"
+                  src="/assets/img/avatar.png" 
+                  data-src="{{ $avatarResized.RelPermalink }}" 
+                  alt='{{ (index .Site.Data.author (printf "%s" .Params.author)).name }}'
+                  aria-label='{{ (index .Site.Data.author (printf "%s" .Params.author)).name }}' 
+                  aria-hidden="true" />  
             </div>                  
             <span>
               <p><strong>{{ (index .Site.Data.author (printf "%s" .Params.author)).name }}</strong></p>
@@ -72,58 +43,23 @@
         {{ end }}
 
         {{ if eq .Params.config.coverVisibility "true" }}
-        {{ $x1100 := "null" }}
-        {{ $x800 := "null" }}
-        {{ $x500 := "null" }}
+        {{ $resizedCover := "null" }}
         {{ $tinyCover := "null" }}    
         {{ with .Params.header.cover.coverIMG }}
           {{ $imageResource := ($.Site.GetPage "section" "uploads").Resources.GetMatch (strings.TrimPrefix "/uploads/" . ) }}
-          {{ $x1100 = $imageResource.Resize "1100x q90" }}
-          {{ $x800 = $imageResource.Resize "800x q90" }}
-          {{ $x500 = $imageResource.Resize "500x q90" }}
+          {{ $resizedCover = $imageResource.Resize "1100x q90" }}
           {{ $tinyCover = $imageResource.Resize "20x q20" }}
         {{ end }}
-        {{ if ne $x1100 "null" }}
+        {{ if ne $resizedCover "null" }}
         <div class="post-cover">
           <div>
-            <noscript>
-                <img 
-                class="asyncImage loaded" 
-                src='{{ $x1100.RelPermalink }}'
-                crossorigin="anonymous"
-                aria-label="{{ .Params.Title}}"
-                alt="{{ .Params.Title}}"  >
-            </noscript>            
-            <picture class="with-js">
-              <source 
-                type="image/webp" 
-                class="asyncImage"
-                srcset='{{ replace (replace ($tinyCover.RelPermalink) ".png" ".webp") ".jpg" ".webp" }}' 
-                data-srcset='{{ replace (replace ($x1100.RelPermalink) ".png" ".webp") ".jpg" ".webp" }} 1100w, {{ replace (replace ($x800.RelPermalink) ".png" ".webp") ".jpg" ".webp" }} 800w, {{ replace (replace ($x500.RelPermalink) ".png" ".webp") ".jpg" ".webp" }} 500w'
-                sizes="(max-width: 700px) 500px, (max-width: 900px) 800px, 1100px"
-                crossorigin="anonymous"
-                alt="{{ .Params.Title}}"
-                aria-label="{{ .Params.Title}}"
-                aria-hidden="true" >
-              <source 
-                type="{{ $x1100.MediaType }}" 
-                class="asyncImage"
-                srcset='{{ $tinyCover.RelPermalink }}' 
-                data-srcset='{{ $x1100.RelPermalink }} 1100w, {{ $x800.RelPermalink }} 800w, {{ $x500.RelPermalink }} 500w'
-                sizes="(max-width: 700px) 500px, (max-width: 900px) 800px, 1100px"
-                crossorigin="anonymous"
-                alt="{{ .Params.Title}}"
-                aria-label="{{ .Params.Title}}"
-                aria-hidden="true" >
-              <img 
-                class="asyncImage" 
-                src="{{ $tinyCover.RelPermalink }}"
-                data-src='{{ $x1100.RelPermalink }}'
-                crossorigin="anonymous"
-                aria-label="{{ .Params.Title}}"
-                alt="{{ .Params.Title}}"  >
-            </picture>
-
+            <img 
+              class="asyncImage" 
+              crossorigin="anonymous"
+              src="{{ $tinyCover.RelPermalink }}" 
+              data-src="{{ $resizedCover.RelPermalink }}" 
+              alt="{{ .Params.Title}}"
+              aria-label="{{ .Params.Title}}"/>
             {{ if .Params.header.cover.coverSrc }}
             <span><a href="{{ .Params.header.cover.coverLnk }}">{{ .Params.header.cover.coverSrc }}</a></span>
             {{ end }}

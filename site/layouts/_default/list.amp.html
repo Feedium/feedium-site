@@ -23,9 +23,9 @@
 
       {{ else if eq .Data.Singular "category" }}
         {{ $listHead = "» مطالب نوشته شده در بخش" }}
-        {{ $listTitle = (index .Site.Data.topic (printf "%s" .Data.Term)).name }}
-        {{ $listDescription = (index .Site.Data.topic (printf "%s" .Data.Term)).description }}
-        {{ $PageImage = (index .Site.Data.topic (printf "%s" .Data.Term)).PageImage }}
+        {{ $listTitle = (index .Site.Data.section (printf "%s" .Data.Term)).name }}
+        {{ $listDescription = (index .Site.Data.section (printf "%s" .Data.Term)).description }}
+        {{ $PageImage = (index .Site.Data.section (printf "%s" .Data.Term)).PageImage }}
 
       {{ else if eq .Data.Singular "author" }}
         {{ $listHead = "» مطالب نوشته شده توسط" }}
@@ -45,20 +45,8 @@
     {{ $tinyCover := $imageResource.Resize "10x" }}
     <div class="main-list-cover ">
       <div class="asyncImage">
-        <amp-img 
-          src='{{ replace ( replace ($resizedCover.RelPermalink) ".png" ".webp" ) ".jpg" ".webp" }}'
-          alt="{{ $SiteTitle }}" 
-          layout="responsive" 
-          height="500"
-          width="1100" data-amp-auto-lightbox-disable>
-          <amp-img 
-            fallback
-            src="{{ $resizedCover.RelPermalink }}" 
-            alt="{{ $SiteTitle }}" 
-            layout="responsive" 
-            height="500"
-            width="1100" data-amp-auto-lightbox-disable>
-          </amp-img>
+        <amp-img src="{{ $resizedCover.RelPermalink }}" alt="{{ $SiteTitle }}" layout="responsive" height="500"
+          width="1100">
         </amp-img>
       </div>
     </div>
@@ -76,7 +64,7 @@
       </div>
     </div>
     <div class="main-list-content">
-      {{ $paginator := .Paginate (where .Site.Pages ".Params.config.post" "=" true)  (index .Site.Params "paginate" | default 6) }}
+      {{ $paginator := .Paginate (where .Pages ".Params.config.post" "=" true)  (index .Site.Params "paginate" | default 6) }}
 
       {{ range $paginator.Pages.ByDate.Reverse  }}
       <div class="post-list">

@@ -26,7 +26,7 @@ collections:
     fields:
       - label: "Subject"
         name: "Subject"
-        widget: "markdown"
+        widget: "text"
         required: true      
       - label: "Description"
         name: "description"

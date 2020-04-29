@@ -4,7 +4,7 @@
             {{ $color = (index .Site.Data.topic (printf "%s" .Data.Term)).color }}
             {{ if eq $color "default" }}{{ $color = .Site.Params.color }}{{ end }}
     {{ else if eq .Data.Singular "category" }}
-            {{ $color = (index .Site.Data.topic (printf "%s" .Data.Term)).color }}
+            {{ $color = (index .Site.Data.section (printf "%s" .Data.Term)).color }}
             {{ if eq $color "default" }}{{ $color = .Site.Params.color }}{{ end }}
     {{ else if eq .Data.Singular "author" }}  
             {{ $color = (index .Site.Data.author (printf "%s" .Data.Term)).color }}
@@ -14,26 +14,18 @@
             {{ if eq $color "default" }}{{ $color = .Site.Params.color }}{{ end }}
     {{ end }}
 {{ end }}
-{{ if eq $color "Amber" }}
-{{ $color = "#FFA000" }}
-{{ else if eq $color "Blue" }}
-{{ $color = "#1976D2" }}
-{{ else if eq $color "Brown" }}
-{{ $color = "#5D4037" }}
-{{ else if eq $color "Gray" }}
-{{ $color = "#455A64" }}
-{{ else if eq $color "Green" }}
-{{ $color = "#388E3C" }}
-{{ else if eq $color "Pink" }}
-{{ $color = "#C2185B" }}
-{{ else if eq $color "Pirple" }}
-{{ $color = "#7B1FA2" }}
-{{ else if eq $color "Red" }}
-{{ $color = "#D32F2F" }}
-{{ else if eq $color "Teal" }}
-{{ $color = "#00796B" }}
+{{ if eq $color "darkBlue" }}
+{{ $color = "#1a75bd" }}
+{{ else if eq $color "darkGray" }}
+{{ $color = "#41545E" }}
+{{ else if eq $color "darkGreen" }}
+{{ $color = "#02675d" }}
+{{ else if eq $color "darkPink" }}
+{{ $color = "#c31651" }}
+{{ else if eq $color "darkViolet" }}
+{{ $color = "#673AB7" }}
 {{ else if eq $color "default" }}
-{{ $color = "#1976D2" }}
+{{ $color = "#0c0c0c" }}
 {{ end }}
 
 <meta name="theme-color" content="{{ $color }}" data-instant-track />

@@ -3,7 +3,7 @@
 <head>
   {{ partial "amp/head-amp.html" . }}
 </head>
-<body class="single">
+<body class="{{if eq .Kind `page` }}single{{else}}list{{end}}">
   {{ partial "amp/nav-amp.html" . }}
   <div class="main">
     <div class="main-head">
@@ -17,30 +17,15 @@
         <div class="post-author ">
           <div>
             <div class="avatar">
-               <amp-img
+              <amp-img 
                 class="asyncImage"
-                layout="responsive"              
-                width="64"
+                layout="responsive"
                 height="64"
-                src='{{ replace (replace ($avatarResized.RelPermalink) ".png" ".webp") ".jpg" ".webp" }} 72w'
-                srcset='{{ replace (replace ($avatarResized.RelPermalink) ".png" ".webp") ".jpg" ".webp" }} 72w'
+                width="64"
+                src="{{ $avatarResized.RelPermalink }}" 
                 alt='{{ (index .Site.Data.author (printf "%s" .Params.author)).name }}'
                 aria-label='{{ (index .Site.Data.author (printf "%s" .Params.author)).name }}' 
-                aria-hidden="true" 
-                data-amp-auto-lightbox-disable>                
-                <amp-img
-                  class="asyncImage"
-                  layout="responsive"                   
-                  fallback
-                  width="64"
-                  height="64"
-                  src='{{ $avatarResized.RelPermalink }} 72w'
-                  srcset='{{ $avatarResized.RelPermalink }} 72w'
-                  alt='{{ (index .Site.Data.author (printf "%s" .Params.author)).name }}'
-                  aria-label='{{ (index .Site.Data.author (printf "%s" .Params.author)).name }}' 
-                  aria-hidden="true" 
-                  data-amp-auto-lightbox-disable>                  
-                </amp-img>
+                aria-hidden="true" >
               </amp-img>
             </div>                  
             <span>
@@ -57,42 +42,23 @@
         {{ end }}
 
         {{ if eq .Params.config.coverVisibility "true" }}
-        {{ $x1100 := "null" }}
-        {{ $x800 := "null" }}
-        {{ $x500 := "null" }}
+        {{ $resizedCover := "null" }}
         {{ $tinyCover := "null" }}    
         {{ with .Params.header.cover.coverIMG }}
-          {{ $imageResource := ($.Site.GetPage "section" "uploads").Resources.GetMatch (strings.TrimPrefix "/uploads/" . ) }}
-          {{ $x1100 = $imageResource.Fill "1100x700 center" }}
-          {{ $x800 = $imageResource.Fill "800x509 center" }}
-          {{ $x500 = $imageResource.Fill "500x318 center" }}
-        
+        {{ $imageResource := ($.Site.GetPage "section" "uploads").Resources.GetMatch (strings.TrimPrefix "/uploads/" . ) }}
+        {{ $resizedCover = $imageResource.Fill "1100x700 center" }}
         {{ end }}
-        {{ if ne $x1100 "null" }}
+        {{ if ne $resizedCover "null" }}
         <div class="post-cover">
           <div>
-
-            
             <amp-img 
               class="asyncImage" 
               layout="responsive"
               height="700"
               width="1100"                    
-              src='{{ replace (replace ($x1100.RelPermalink) ".png" ".webp") ".jpg" ".webp" }}' 
-              srcset='{{ replace (replace ($x1100.RelPermalink) ".png" ".webp") ".jpg" ".webp" }} 1100w, {{ replace (replace ($x800.RelPermalink) ".png" ".webp") ".jpg" ".webp" }} 800w, {{ replace (replace ($x500.RelPermalink) ".png" ".webp") ".jpg" ".webp" }} 500w'
+              src="{{ $resizedCover.RelPermalink }}" 
               alt="{{ .Params.Title}}"
               aria-label="{{ .Params.Title}}">
-              <amp-img
-                fallback
-                class="asyncImage" 
-                layout="responsive"
-                height="700"
-                width="1100"                    
-                src="{{ $x1100.RelPermalink }}" 
-                srcset='{{ $x1100.RelPermalink }} 1100w, {{ $x800.RelPermalink }} 800w, {{ $x500.RelPermalink }} 500w'
-                alt="{{ .Params.Title}}"
-                aria-label="{{ .Params.Title}}">
-              </amp-img>
             </amp-img>
             {{ if .Params.header.cover.coverSrc }}
             <span><a href="{{ .Params.header.cover.coverLnk }}">{{ .Params.header.cover.coverSrc }}</a></span>

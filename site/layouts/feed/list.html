@@ -16,49 +16,11 @@
     {{ $SiteTitle := .Site.Title }}
 
     {{ range first 1 .Site.RegularPages }}
-    {{ $image := ($.Site.GetPage "section" "uploads").Resources.GetMatch (strings.TrimPrefix "/uploads/" $PageImage ) }}
-    {{ $imageResource := $image }}
+    {{ $imageResource := ($.Site.GetPage "section" "uploads").Resources.GetMatch (strings.TrimPrefix "/uploads/" ($PageImage) ) }}
     {{ $resizedCover := $imageResource.Resize "400x q20" }}
-
-    {{ $x800 := $imageResource.Resize "800x q20" }}
-    {{ $x400 := $imageResource.Resize "500x q20" }}
-      
     {{ $tinyCover := $imageResource.Resize "10x" }}
     <div class="main-list-cover ">
-
-      <picture>
-          <source 
-            type="image/webp" 
-            class="asyncImage"
-            srcset='{{ replace (replace ($tinyCover.RelPermalink) ".png" ".webp") ".jpg" ".webp" }}' 
-            data-srcset='{{ replace (replace ($x800.RelPermalink) ".png" ".webp") ".jpg" ".webp" }} 800w,
-                         {{ replace (replace ($x400.RelPermalink) ".png" ".webp") ".jpg" ".webp" }} 400w'
-            sizes="(max-width: 700px) 400px, (max-width: 900px) 800px, 1100px"
-            crossorigin="anonymous"
-            alt="{{ $SiteTitle  }}"
-            aria-label="{{ $SiteTitle }}"
-            aria-hidden="true" >
-          <source 
-            type="{{ $x800.MediaType }}" 
-            class="asyncImage"
-            srcset='{{ $tinyCover.RelPermalink }}' 
-            data-srcset='{{ $x800.RelPermalink }} 800w,
-                         {{ $x400.RelPermalink }} 400w'
-            sizes="(max-width: 1000px) 400px, 800px"
-            crossorigin="anonymous"
-            alt="{{ $SiteTitle }}"
-            aria-label="{{ $SiteTitle  }}"
-            aria-hidden="true" >
-          <img 
-            class="asyncImage" 
-            src="{{ $tinyCover.RelPermalink }}"
-            data-src='{{ $x800.RelPermalink }}'
-            crossorigin="anonymous"
-            alt="{{ $SiteTitle }}"
-            aria-label="{{ $SiteTitle }}"  >
-        </picture>
-
-
+      <img class="asyncImage"  crossorigin="anonymous" src="{{ $tinyCover.RelPermalink }}" data-src="{{ $resizedCover.RelPermalink }}" alt="{{ $SiteTitle }}"  />
     </div>
     {{ end }}
 
@@ -78,38 +40,30 @@
         <a href="{{ .Permalink }}" aria-label="{{ .Params.shamsiDate }}">
 					<h3 class="title" data-date="» {{ .Params.shamsiDate }}"></h3>
 				</a>					
-        <a href="{{ .Permalink }}">
-          <pre>{{ .Params.subject }}</pre>
-        </a> {{/*  | truncate 320  */}}
+        <article>{{ .Content }}</article> {{/*  | truncate 320  */}}
       </div>
       {{ end }}
     </div>
     {{ if gt $paginator.TotalPages 1 }}
     <div class="main-list-pagination">
         <div class="list-pagination">
-          <div class="main-list-more with-js">
-            <a class="btn">بیشتر</a>
-          </div>
-          <noscript>
-            <div class="next">
-              {{ if $paginator.HasPrev }}
-              <a class="btn"
-                href="{{ $paginator.Prev.URL }}">‹ صفحه قبل</a>
-              {{ end }}
+            <div class="main-list-more">
+              <a class="btn">بیشتر</a>
             </div>
-            <div class="back">
-              {{ if $paginator.HasNext }}
-              <a class="btn"
-                href="{{ $paginator.Next.URL }}">صفحه بعد ›</a>
-              {{ end }}
-            </div>  
-          </noscript>            
         </div>
     </div>
     {{ end }}
 
-    {{ $url := printf "%s" .Site.BaseURL  }}
-    <div id="list" class="none">[{{ if $paginator }}{{ range $paginator.Pagers  }}{{ if ne .PageNumber 1 }}"{{ printf "%s%s" $url .URL }}",{{ end }}{{ end }}{{ end }}""]</div>
+      {{ $url := printf "%s" .Site.BaseURL  }}
+      <div id="list" class="none">[
+          {{ if $paginator }}
+          {{ range $paginator.Pagers  }}
+          {{ if ne .PageNumber 1 }}
+          "{{ printf "%s%s" $url .URL }}",
+          {{ end }}
+          {{ end }}
+          {{ end }}""]
+      </div>
   </div>
 
   

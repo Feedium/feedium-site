@@ -1,6 +1,5 @@
 ---
-config:
-  color: Green
 title: آخرین خبرها
+config:
+  color: darkGreen
 ---
-

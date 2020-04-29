@@ -7,9 +7,9 @@
   {{ $description = printf "%s" (index .Site.Data.topic (printf "%s" .Data.Term)).description }}
   {{ $cover = printf "%s" (index .Site.Data.topic (printf "%s" .Data.Term)).Cover }}
 {{ else if eq .Data.Singular "category" }}
-  {{ $title = printf "%s - %s" (index .Site.Data.topic (printf "%s" .Data.Term)).name $title }}
-  {{ $description = printf "%s" (index .Site.Data.topic (printf "%s" .Data.Term)).description }}
-  {{ $cover = printf "%s" (index .Site.Data.topic (printf "%s" .Data.Term)).Cover }}
+  {{ $title = printf "% - %s" (index .Site.Data.section (printf "%s" .Data.Term)).name $title }}
+  {{ $description = printf "%s" (index .Site.Data.section (printf "%s" .Data.Term)).description }}
+  {{ $cover = printf "%s" (index .Site.Data.section (printf "%s" .Data.Term)).Cover }}
 {{ else if eq .Data.Singular "author" }}  
   {{ $title = printf "%s - %s" (index .Site.Data.author (printf "%s" .Data.Term)).name $title }}
   {{ $description = printf "%s" (index .Site.Data.author (printf "%s" .Data.Term)).description }}

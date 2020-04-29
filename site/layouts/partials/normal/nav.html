@@ -1,4 +1,5 @@
 <div class="header noselect">
+    {{ partial "modules/theme.html" . }}
     <div class="header-navbar">
         <div class="header-top">
             <div class="header-main">
@@ -7,9 +8,9 @@
                             {{ partialCached "modules/svg/feedium.svg" . }}
                         </a>
                     </div>
-                    <a href="{{ .Site.BaseURL }}/posts">&nbsp;آخرین مطالب&nbsp;</a>
-                    <a href="{{ .Site.BaseURL }}/feed">&nbsp;آخرین خبرها&nbsp;</a>
-                    <a href="{{ .Site.BaseURL }}/contact" class="btn">&nbsp;تماس با ما&nbsp;</a>
+                    <a href="{{ .Site.BaseURL }}"> آخرین مطالب </a>
+                    <a href="{{ .Site.BaseURL }}/feed"> آخرین خبرها </a>
+                    <a href="{{ .Site.BaseURL }}/contact" class="btn"> تماس با ما </a>
             </div>
         </div>
         <div class="header-nav">
@@ -25,7 +26,7 @@
                         {{ if eq $.Params.Section (printf "%s" ($key | urlize)) }}
                             {{ $class = "active" }}
                         {{ end }}                        
-                        <li><a href="/topic/{{ $key | urlize  }}" class="{{ $class }}">&nbsp;{{ (index $.Site.Data.topic (printf "%s" $key )).name }}&nbsp;</a></li>
+                        <li><a href="/topic/{{ $key | urlize  }}" class="{{ $class }}"> {{ (index $.Site.Data.topic (printf "%s" $key )).name }} </a></li>
                     {{ end }}                                                          
                 </ul>
                 <a class="header-arrow"  id="navBack">›</a>
@@ -34,23 +35,17 @@
         <div class="header-nav hide" id="nav">
             <nav class="header-menu">
                 <div class="logo"> 
-                    <a href="{{ .Site.BaseURL }}/" aria-label="Home">
+                    <a href="/" aria-label="Home">
                         {{ partialCached "modules/svg/feedium.svg" . }}
                     </a>
                 </div>
                 {{ $title := "" }}
                 {{ if eq .Data.Singular "tag" }}
                     {{ $title = (printf "مطالب نوشته شده با موضوع %s" (index .Site.Data.topic (printf "%s" .Data.Term)).name ) }}
-                {{ else if eq .Data.Singular "category" }}
-                    {{ $title = (printf "مطالب نوشته شده در بخش %s" (index .Site.Data.topic (printf "%s" .Data.Term)).name ) }}                    
                 {{ else if .Params.config.feed }}
                     {{ $title = printf "خبرهای روز %s" .Params.shamsiDate }}
                 {{ else }}
-                    {{ if eq .Title "Posts"}}
-                        {{ $title =  "آخرین مطالب"}}
-                    {{ else }}
-                        {{ $title = .Title }}
-                    {{ end }}
+                    {{ $title = .Title }}
                 {{ end }}                
                 <span>{{ $title }}</span>
                 {{ partial "modules/share.html" . }}

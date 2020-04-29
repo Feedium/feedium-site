@@ -147,8 +147,8 @@ nav ul li {
 }
 
 hr {
-    border: 1px solid #e3e3e363;
-    width: 100%;
+    border-color: var(--lightTransparent);
+    border-bottom: 1px
 }
 
 img[src=""] {
@@ -238,11 +238,10 @@ img[src=""] {
 .main-list-head {
     display: grid;
     grid-template-columns: minmax(300px, 1100px);
-    grid-template-rows: 75px minmax(200px, auto);
+    grid-template-rows: 150px minmax(200px, auto);
     grid-template-areas: ".""main-list-title";
     grid-area: main-list-head;
-    align-self: center;
-    justify-self: center;
+    place-self: center center;
     z-index: 1
 }
 
@@ -304,8 +303,7 @@ img[src=""] {
     grid-template-rows: minmax(200px, auto);
     grid-template-areas: ".";
     grid-area: main-list-content;
-    align-self: center;
-    justify-self: center;
+    place-self: center center;
     margin: 50px 0 100px;
     z-index: 1
 }
@@ -385,11 +383,7 @@ img[src=""] {
     position: absolute;
     padding: 5px 25px;
 }
-.feed pre {
-    font-size: 1.2em;
-    line-height: 1.9em;
-    font-family: Vazir;
-}
+
 
 .main-list-pagination {
     display: grid;
@@ -397,8 +391,7 @@ img[src=""] {
     grid-template-rows: auto;
     grid-template-areas: "list-pagination";
     grid-area: main-list-pagination;
-    align-self: center;
-    justify-self: center;
+    place-self: center center;
     margin-bottom: 150px
 }
 
@@ -518,8 +511,7 @@ img[src=""] {
     grid-template-columns: minmax(300px, 1100px);
     grid-template-rows: 1fr;
     grid-area: header-top;
-    align-self: center;
-    justify-self: center;
+    place-self: center center
 }
 
 .header-nav {
@@ -551,13 +543,14 @@ img[src=""] {
 .header-main .logo {
     margin-left: 10px;
     margin-right: 10px;
-    /* width: 64px; */
-    height: 64px; 
+    width: 96px;
+    height: 96px
 }
+
 .header-main .logo svg {
-    width: 64px;
-    height: 60px; 
-    /* padding-top: 12px; */
+    width: 96px;
+    height: 96px;
+    padding-top: 4px
 }
 
 .header-main .logo svg path {
@@ -602,8 +595,7 @@ img[src=""] {
 }
 
 .header-arrow {
-    align-self: center;
-    justify-self: center;
+    place-self: center center;
     cursor: pointer;
     width: 48px;
     height: 48px;
@@ -658,8 +650,7 @@ img[src=""] {
     grid-template-rows: 150px minmax(200px, auto);
     grid-template-areas: ".""main-title";
     grid-area: main-head;
-    align-self: center;
-    justify-self: center;
+    place-self: center center
 }
 
 .main-title {
@@ -729,8 +720,7 @@ img[src=""] {
     display: grid;
     grid-auto-columns: 1fr;
     grid-template-rows: 1fr;
-    align-self: center;
-    justify-self: center;
+    place-self: center center
 }
 
 .post-summary p {
@@ -792,8 +782,7 @@ img[src=""] {
     grid-template-rows: 1fr;
     grid-template-areas: "."".";
     grid-area: main-content;
-    align-self: center;
-    justify-self: center;
+    place-self: center center
 }
 
 .main-content h1 {
@@ -851,16 +840,14 @@ img[src=""] {
 }
 
 .main-content img {
-    align-self: center;
-    justify-self: center;
+    place-self: center center;
     width: 100%;
     max-width: 800px;
     height: auto
 }
 
 .main-content .w {
-    align-self: center;
-    justify-self: center;
+    place-self: center center;
     width: 100vw;
     height: auto;
     border-radius: 10px
@@ -872,8 +859,7 @@ img[src=""] {
     grid-template-rows: 1fr minmax(100px, auto) minmax(50px, auto);
     grid-template-areas: "main-footer-tagline""main-footer-comment"".";
     grid-area: main-footer;
-    align-self: center;
-    justify-self: center;
+    place-self: center center
 }
 
 .main-footer-tagline {
@@ -912,8 +898,7 @@ img[src=""] {
     grid-template-rows: 1fr;
     grid-template-areas: "main-footer-comment";
     grid-area: main-footer-comment;
-    align-self: center;
-    justify-self: center;
+    place-self: center center;
     margin: 50px 0 50px
 }
 
@@ -930,8 +915,7 @@ img[src=""] {
     grid-template-rows: auto;
     grid-template-areas: ". related-content .";
     grid-area: related;
-    align-self: center;
-    justify-self: center;
+    place-self: center center;
     width: 100%;
     height: 100%;
     background-color: var(--relatedBg);
@@ -946,8 +930,7 @@ img[src=""] {
     grid-template-rows: 1fr;
     grid-template-areas: "related-content";
     grid-area: related-content;
-    align-self: center;
-    justify-self: center;
+    place-self: center center
 }
 
 .related-content:first-child {
@@ -1042,8 +1025,7 @@ img[src=""] {
     grid-template-rows: 1fr;
     grid-template-areas: ". . ."". . .";
     grid-area: footer-nav;
-    align-self: center;
-    justify-self: center;
+    place-self: center center;
     font-size: 1em;
     font-weight: 700
 }
@@ -1062,8 +1044,7 @@ img[src=""] {
     grid-template-rows: 1fr;
     grid-template-areas: ".";
     grid-area: footer-logo;
-    align-self: center;
-    justify-self: center;
+    place-self: center center
 }
 
 .footer-logo * {
@@ -1082,8 +1063,7 @@ img[src=""] {
     grid-template-rows: 1fr;
     grid-template-areas: ".";
     grid-area: footer-link;
-    align-self: center;
-    justify-self: center;
+    place-self: center center
 }
 
 .footer-link svg path {
@@ -1110,8 +1090,7 @@ img[src=""] {
     grid-template-rows: 1fr;
     grid-template-areas: ".";
     grid-area: footer-copyright;
-    align-self: center;
-    justify-self: center;
+    place-self: center center;
     font-size: .8em;
     font-weight: 400
 }
@@ -1121,7 +1100,7 @@ img[src=""] {
     font-size: .7em;
     margin: 25px;
     display: inline-grid;
-    color: var(--maincolorlighter);
+    color: #ffffff96
 }
 
 .center {
@@ -1168,92 +1147,6 @@ img[src=""] {
 .content-share.none {
     display: inherit;
     transform: translateY(50px)
-}
-
-
-.tweet-frame {
-    max-width: 600px;
-    display: grid;
-    align-self: center;
-    justify-self: center;
-    grid-template-columns: minmax(auto, 600px);
-}
-.tweet {
-    border: 1px solid #dae4ed;
-    padding: 10px 20px;
-    border-radius: 5px;
-    background: #fff;
-    margin-bottom: 25px;        
-}
-.tweet a {
-    background: unset
-}
-.tweet-actions:before {
-    content: "";
-    display: block;
-    clear: both;
-    background-image: url("data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTI7IiB4bWw6c3BhY2U9InByZXNlcnZlIiB3aWR0aD0iMTZweCIgaGVpZ2h0PSIxNnB4Ij4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNNTEyLDk3LjI0OGMtMTkuMDQsOC4zNTItMzkuMzI4LDEzLjg4OC02MC40OCwxNi41NzZjMjEuNzYtMTIuOTkyLDM4LjM2OC0zMy40MDgsNDYuMTc2LTU4LjAxNiAgICBjLTIwLjI4OCwxMi4wOTYtNDIuNjg4LDIwLjY0LTY2LjU2LDI1LjQwOEM0MTEuODcyLDYwLjcwNCwzODQuNDE2LDQ4LDM1NC40NjQsNDhjLTU4LjExMiwwLTEwNC44OTYsNDcuMTY4LTEwNC44OTYsMTA0Ljk5MiAgICBjMCw4LjMyLDAuNzA0LDE2LjMyLDIuNDMyLDIzLjkzNmMtODcuMjY0LTQuMjU2LTE2NC40OC00Ni4wOC0yMTYuMzUyLTEwOS43OTJjLTkuMDU2LDE1LjcxMi0xNC4zNjgsMzMuNjk2LTE0LjM2OCw1My4wNTYgICAgYzAsMzYuMzUyLDE4LjcyLDY4LjU3Niw0Ni42MjQsODcuMjMyYy0xNi44NjQtMC4zMi0zMy40MDgtNS4yMTYtNDcuNDI0LTEyLjkyOGMwLDAuMzIsMCwwLjczNiwwLDEuMTUyICAgIGMwLDUxLjAwOCwzNi4zODQsOTMuMzc2LDg0LjA5NiwxMDMuMTM2Yy04LjU0NCwyLjMzNi0xNy44NTYsMy40NTYtMjcuNTIsMy40NTZjLTYuNzIsMC0xMy41MDQtMC4zODQtMTkuODcyLTEuNzkyICAgIGMxMy42LDQxLjU2OCw1Mi4xOTIsNzIuMTI4LDk4LjA4LDczLjEyYy0zNS43MTIsMjcuOTM2LTgxLjA1Niw0NC43NjgtMTMwLjE0NCw0NC43NjhjLTguNjA4LDAtMTYuODY0LTAuMzg0LTI1LjEyLTEuNDQgICAgQzQ2LjQ5Niw0NDYuODgsMTAxLjYsNDY0LDE2MS4wMjQsNDY0YzE5My4xNTIsMCwyOTguNzUyLTE2MCwyOTguNzUyLTI5OC42ODhjMC00LjY0LTAuMTYtOS4xMi0wLjM4NC0xMy41NjggICAgQzQ4MC4yMjQsMTM2Ljk2LDQ5Ny43MjgsMTE4LjQ5Niw1MTIsOTcuMjQ4eiIgZmlsbD0iIzFkYTFmMiIvPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=");
-    height: 16px;
-    width: 16px;
-}
-.tweet[dir="ltr"] .tweet-actions:before {
-    float: right;
-}    
-.tweet[dir="rtl"] .tweet-actions:before {
-    float: left; 
-}      
-.tweet-user-img {
-    width: 48px;
-    height: 48px;
-    border-radius: 100%;
-    margin-top: 22px;
-    position: absolute;
-    overflow: hidden;  
-}
-.tweet[dir="ltr"] .tweet-user-img  {
-    float: left;
-}    
-.tweet[dir="rtl"] .tweet-user-img  {
-    float: right; 
-}       
-.tweet-user-name {
-    font-weight: 700;
-}
-.tweet[dir="ltr"] .tweet-user-name  {
-    padding-left: 58px;
-}    
-.tweet[dir="rtl"] .tweet-user-name  {
-    padding-right: 58px;
-}      
-.tweet-user-name span {
-    font-weight: 400;
-    color: #676767;
-    font-size: .8em;
-    display: block;
-}
-.tweet-body {
-    margin-bottom: 20px;
-    font-size: 1em;
-}
-.tweet-img {
-    max-width: 560px;
-    border-radius: 10px;
-}
-.tweet-video {
-    max-width: 560px;
-    border-radius: 10px;
-    width: 100%;
-}
-.tweet-actions {
-    margin-top: 4px;
-    border-top: 1px solid #dae4ed;
-    padding-top: 10px;
-    color: #676767;
-}
-.tweet-time {
-    font-weight: 400;
-    color: #676767;
-    font-size: .8em;
 }
 
 @media screen and (min-width:1110px) {

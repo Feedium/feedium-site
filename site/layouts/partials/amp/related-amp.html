@@ -24,34 +24,16 @@
             {{ end }}
             <span>
               <a href="{{ .RelPermalink }}">
-                <amp-img
+                <amp-img 
                   class="asyncImage"
-                  layout="responsive"              
+                  layout="responsive"
                   height="230"
                   width="350"
-                  src='{{ replace (replace ($resized.RelPermalink) ".png" ".webp") ".jpg" ".webp" }} 72w'
-                  srcset='{{ replace (replace ($resized.RelPermalink) ".png" ".webp") ".jpg" ".webp" }} 72w'
-                  alt="{{ .Params.Title }}"
-                  aria-label="{{ .Params.Title }}" 
-                  aria-hidden="true" 
-                  data-amp-auto-lightbox-disable>                
-                  <amp-img
-                    class="asyncImage"
-                    layout="responsive"                   
-                    fallback
-                    height="230"
-                    width="350"
-                    src='{{ $resized.RelPermalink }} 72w'
-                    srcset='{{ $resized.RelPermalink }} 72w'
-                    alt='{{ (index .Site.Data.author (printf "%s" .Params.author)).name }}'
-                    alt="{{ .Params.Title }}"
-                    aria-label="{{ .Params.Title }}" 
-                    aria-hidden="true" 
-                    data-amp-auto-lightbox-disable>                  
-                  </amp-img>
+                  src="{{ $resized.RelPermalink }}"
+                  aria-label="{{ .Params.Title }}" >
                 </amp-img>
                 <p>» نوشته {{ (index .Site.Data.author (printf "%s" .Params.author)).name }}
-                  در بخش {{ (index .Site.Data.topic (printf "%s" .Params.section)).name }}</p>
+                  در بخش {{ (index .Site.Data.section (printf "%s" .Params.section)).name }}</p>
                 <h3>{{ .Title }}</h3>
               </a>
             </span>

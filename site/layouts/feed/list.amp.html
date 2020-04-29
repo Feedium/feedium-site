@@ -20,24 +20,12 @@
     {{ $resizedCover := $imageResource.Resize "400x q20" }}
     {{ $tinyCover := $imageResource.Resize "10x" }}
     <div class="main-list-cover ">
-      <div class="asyncImage">
-        <amp-img 
-          src='{{ replace ( replace ($resizedCover.RelPermalink) ".png" ".webp" ) ".jpg" ".webp" }}'
-          alt="{{ $SiteTitle }}" 
-          layout="responsive" 
-          height="500"
-          width="1100" data-amp-auto-lightbox-disable>
-          <amp-img 
-            fallback
-            src="{{ $resizedCover.RelPermalink }}" 
-            alt="{{ $SiteTitle }}" 
-            layout="responsive" 
-            height="500"
-            width="1100" data-amp-auto-lightbox-disable>
+        <div class="asyncImage">
+          <amp-img src="{{ $resizedCover.RelPermalink }}" alt="{{ $SiteTitle }}" layout="responsive" height="500"
+            width="1100">
           </amp-img>
-        </amp-img>
+        </div>
       </div>
-    </div>
     {{ end }}
 
     <div class="main-list-head noselect">
@@ -56,9 +44,7 @@
         <a href="{{ .Permalink }}" aria-label="{{ .Params.shamsiDate }}">
 					<h3 class="title" data-date="» {{ .Params.shamsiDate }}"></h3>
 				</a>					
-        <a href="{{ .Permalink }}">
-          <pre>{{ .Params.subject }}</pre>
-        </a>
+        <article>{{ .Content }}</article> {{/*  | truncate 320  */}}
       </div>
       {{ end }}
     </div>

@@ -26,49 +26,22 @@
 {{/* set the sizes attribute to (min-width: 35em) 1200px, 100vw unless overridden in shortcode */}}
 
 {{ $img := imageConfig ($src.RelPermalink | printf "content/%s" ) }}
-  <picture class='{{ .Get "class" }} with-js'>
-    <source 
-      type="image/webp" 
-      class='asyncImage {{ .Get "class" }}'
-      srcset='{{ replace (replace ($small.RelPermalink) ".png" ".webp") ".jpg" ".webp" }}' 
-      data-srcset='{{ if ge $src.Width "500" }}{{ with $tiny.RelPermalink }}{{ replace (replace (.) ".png" ".webp") ".jpg" ".webp" }} 500w,{{ end }}{{ end }} {{ if ge $src.Width "800" }}{{ with $small.RelPermalink }}{{ replace (replace (.) ".png" ".webp") ".jpg" ".webp" }} 800w,{{ end }}{{ end }} {{ if ge $src.Width "1200" }}{{ with $medium.RelPermalink }}{{ replace (replace (.) ".png" ".webp") ".jpg" ".webp"  }} 1200w{{ end }}{{ end }} {{ if ge $src.Width "1500" }}{{ with $large.RelPermalink }}, {{ replace (replace (.) ".png" ".webp") ".jpg" ".webp" }} 1500w {{ end }}{{ end }}'                     
-      sizes="(max-width: 700px) 500px, (max-width: 900px) 800px, 1100px"
-      crossorigin="anonymous"
-      alt="{{ .Params.Title}}"
-      aria-label="{{ .Params.Title}}"
-      aria-hidden="true" >
-    <source 
-      type="{{ $small.MediaType }}" 
-      class='asyncImage {{ .Get "class" }}'
-      srcset='{{ $small.RelPermalink }}' 
-      data-srcset='{{ if ge $src.Width "500" }}{{ with $tiny.RelPermalink }}{{.}} 500w,{{ end }}{{ end }} {{ if ge $src.Width "800" }}{{ with $small.RelPermalink }}{{.}} 800w,{{ end }}{{ end }} {{ if ge $src.Width "1200" }}{{ with $medium.RelPermalink }}{{.}} 1200w{{ end }}{{ end }} {{ if ge $src.Width "1500" }}{{ with $large.RelPermalink }}, {{.}} 1500w {{ end }}{{ end }}'      
-      sizes="(max-width: 700px) 500px, (max-width: 900px) 800px, (max-width: 1300px) 1100px, 1500w"
-      crossorigin="anonymous"
-      {{ with .Get "alt" }}
-      alt='{{.}}'
-      aria-label="{{.}}"
-      aria-hidden="true"       
-      {{ end }}>
-    <img 
-      class='asyncImage {{ .Get "class" }}'
-      src="{{ $small.RelPermalink }}"
-      data-src='{{ $medium.RelPermalink }}'
-      crossorigin="anonymous"
-      {{ with .Get "alt" }}
-      alt='{{.}}'
-      aria-label="{{.}}"
-      aria-hidden="true"       
-      {{ end }}>
-  </picture>
-  <noscript>
-      <img 
-      class='asyncImage loaded'
-      src="{{ $small.RelPermalink }}"
-      data-src='{{ $medium.RelPermalink }}'
-      crossorigin="anonymous"
-      {{ with .Get "alt" }}
-      alt='{{.}}'
-      aria-label="{{.}}"
-      aria-hidden="true"       
-      {{ end }}>
-  </noscript>
+
+<img 
+  class='asyncImage {{ (.Get "class") }}'
+  width="{{ $img.Width }}" height="{{ $img.Height }}"
+  src="{{ $lqip.RelPermalink }}"
+  data-sizes="auto"
+  data-srcset='
+  {{ if ge $src.Width "500" }}{{ with $tiny.RelPermalink }}{{.}} 500w,{{ end }}{{ end }}
+  {{ if ge $src.Width "800" }}{{ with $small.RelPermalink }}{{.}} 800w,{{ end }}{{ end }}
+  {{ if ge $src.Width "1200" }}{{ with $medium.RelPermalink }}{{.}} 1200w{{ end }}{{ end }}
+  {{ if ge $src.Width "1500" }}{{ with $large.RelPermalink }}, {{.}} 1500w {{ end }}{{ end }}'
+  {{ if .Get $medium }}
+  data-src="{{ $medium.RelPermalink }}"
+  {{ else }}
+  data-src="{{ $src.RelPermalink }}"
+  {{ end }}      
+  {{ with .Get "alt" }}
+  alt='{{.}}'
+  {{ end }} />

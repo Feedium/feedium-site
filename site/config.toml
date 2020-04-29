@@ -1,4 +1,4 @@
-baseurl = "https://beta.feedium.net"
+baseurl = "https://feedium-production.netlify.com"
 title = "فیدیوم"
 layoutDir = "layouts"
 contentdir = "content"
@@ -24,14 +24,14 @@ rssLimit = 100
 optimize = true
 shamsiDateFormat = "d MMM ماه yyyy"
 DefaultContentLanguage = "fa"
-
+minify = true
 [params]
 LatinName = "Feedium"
-color = "Pink"
+color = "darkBlue"
 copyright = "کلیه مطالب این وبلاگ براساس گواهی کریتیو کامنز ۴.۰ (BY-NC-SA) منتشر می‌شود."
 cover = "/uploads/cover-default.png"
 description = "Params description"
-fullPersianName = "فیدیوم - تکنولوژی نجیب"
+fullPersianName = "فیدیوم - نگاهی متفاوت به خبرها"
 htmlDirection = "rtl"
 languageCode = "fa-IR"
 pageCover = "/uploads/page-default.png"
@@ -46,16 +46,16 @@ name = "Feedium"
 comment = "false"
 disqusUser = "hilnu"
 facebooUser = "pagename"
-facebook = "false"
+facebook = "true"
 github = "true"
 githubUser = "kevinmiston"
 instagram = "true"
-instagramUser = "khorakium"
+instagramUser = "pagename"
 rss = "true"
 telegram = "true"
-telegramUser = "khorakium"
+telegramUser = "feedium"
 twitter = "true"
-twitterUser = "khorakium"
+twitterUser = "feedium"
 
 [sitemap]
 changefreq = "daily"
@@ -63,8 +63,8 @@ filename = "sitemap.xml"
 priority = 0.5
 
 [permalinks]
-feed = "/feed/:year/:month/:day"
 posts = "/posts/:title/"
+feed ="/feed/:year/:month/:day"
 
 [taxonomies]
 author = "author"
