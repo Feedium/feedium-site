@@ -1,0 +1,130 @@
+{{ $title := .Site.Title }}
+{{ $description := .Site.Params.description }}
+{{ $cover := .Site.Params.cover }}
+
+{{ if eq .Data.Singular "tag" }}
+  {{ $title = printf "%s - %s" (index .Site.Data.topic (printf "%s" .Data.Term)).name $title }}
+  {{ $description = printf "%s" (index .Site.Data.topic (printf "%s" .Data.Term)).description }}
+  {{ $cover = printf "%s" (index .Site.Data.topic (printf "%s" .Data.Term)).Cover }}
+{{ else if eq .Data.Singular "category" }}
+  {{ $title = printf "%s - %s" (index .Site.Data.topic (printf "%s" .Data.Term)).name $title }}
+  {{ $description = printf "%s" (index .Site.Data.topic (printf "%s" .Data.Term)).description }}
+  {{ $cover = printf "%s" (index .Site.Data.topic (printf "%s" .Data.Term)).Cover }}
+{{ else if eq .Data.Singular "author" }}  
+  {{ $title = printf "%s - %s" (index .Site.Data.author (printf "%s" .Data.Term)).name $title }}
+  {{ $description = printf "%s" (index .Site.Data.author (printf "%s" .Data.Term)).description }}
+  {{ $cover = printf "%s" (index .Site.Data.author (printf "%s" .Data.Term)).Cover }}
+{{ else if eq .Section  "posts" }}
+    {{ $title = printf "%s - %s" .Title $title }}
+    {{ $description = .Params.description }}
+    {{ $cover = .Params.header.cover.coverIMG }} 
+{{ else if .IsHome }}    
+    {{ $title = printf "%s" .Site.Params.fullPersianName }}
+    {{ $description = .Site.Params.description }}
+    {{ $cover = .Site.Params.cover }}
+{{ else if .Params.config.feed }}
+    {{ $title = printf "خبرهای روز %s - %s" .Params.shamsiDate $title }} 
+    {{ $description = .Params.description |  default (.Content | truncate 500) }}
+    {{ $cover = .Site.Params.cover }}    
+{{ else }}
+    {{ $title = printf "%s - %s" (.Title | default .Site.Params.fullPersianName) $title }}
+    {{ $description = .Params.description | default .Site.Params.description }}
+    {{ $cover = .Params.cover | default .Site.Params.cover }}    
+{{ end }}
+
+<title>{{ $title }}</title>
+<meta name="author" content='{{ (index $.Site.Data.author (printf "%s" .Params.author )).name | default .Site.Params.author.name }}'>
+<meta name="keywords" content='{{ if .Params.topic }}{{ range .Params.topic }}{{ . }}, {{ (index $.Site.Data.topic (printf "%s" . )).name }}, {{ end }}{{ else}}{{ .Site.Params.tags }}, {{ end }}{{ .Site.Title }}'>
+<meta name="description" content="{{ $description | truncate 250 }}">
+
+
+<meta property="og:locale" content="{{ .Site.Params.languageCode }}" />
+{{ $type := "article" }}
+{{ if .IsHome }}
+{{ $type = "website" }}
+{{ else if .IsNode }}
+{{ $type = "website" }}
+{{ end }}
+
+<meta property="og:type" content="{{ $type }}" />
+<meta property="og:url" content="{{ .Permalink }}" />
+<meta property="og:site_name" content="{{ .Site.Title }}" />
+
+<meta property="og:title" content="{{ $title }}" />
+<meta property="og:description" content="{{ $description | truncate 250 }}" />
+<meta property="og:image" content="{{.Site.BaseURL}}{{ $cover }}">
+
+<meta name="twitter:widgets:csp" content="on" />
+<meta name="twitter:widgets:theme" content="light" />    
+<meta name="twitter:dnt" content="on" />
+<meta name="twitter:card" content="summary_large_image" />
+{{ if .Site.Params.link.twitter }}
+<meta name="twitter:creator" content="@{{ .Site.Params.link.twitterUser }}" />
+<meta name="twitter:site" content="@{{ .Site.Params.link.twitterUser }}" />
+{{ end }}
+<meta name="twitter:url" content="{{ .Permalink }}" />
+
+<meta name="twitter:title" content="{{ $title }}" />
+<meta name="twitter:description" content="{{ $description | truncate 250 }}" />    
+<meta name="twitter:image" content="{{.Site.BaseURL}}{{ $cover }}" />
+<meta name="twitter:image:alt" content="{{ $title }}" />
+
+{{ if or (not .IsHome) (not .IsNode) }}
+{{ $author := (index $.Site.Data.author (printf "%s" .Params.author )).name | default .Site.Params.author.name }} 
+{{ $sectionName := (index $.Site.Data.topic (printf "%s" .Params.section )).name | default "عمومی" }}
+{{ $sectionURL := .Params.section | default "" }}
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "{{ .Site.BaseURL }}"
+    },
+    "headline": "{{ $title }}",
+    "image": [
+      "{{ .Site.BaseURL }}{{ $cover }}"
+     ],
+    "datePublished": "{{ .Date.Format "2006-01-02T15:04:03Z" }}",
+    "dateModified": "{{ .Date.Format "2006-01-02T15:04:03Z" }}",
+    "author": {
+      "@type": "Person",
+      "name": "{{ $author }}",
+    },
+     "publisher": {
+      "@type": "Organization",
+      "name": "{{ .Site.Title }}",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "{{ .Site.BaseURL }}/assets/img/amp-org-logo.png",
+        "height": 60,
+        "width": 600
+      }
+    },
+    "description": "{{ $description | truncate 250 }}"
+  }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "{{ .Site.Title }}",
+        "item": "{{ .Site.BaseURL }}"
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "{{ $sectionName }}",
+        "item": "{{ .Site.BaseURL }}/topic/{{ $sectionURL }}"
+      },{
+        "@type": "ListItem",
+        "position": 3,
+        "name": "{{ .Title }}",
+        "item": "{{ .Permalink }}"
+      }]
+    }
+    </script>
+{{ end }}

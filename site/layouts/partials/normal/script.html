@@ -1,0 +1,10 @@
+{{ $string := (partial "normal/script-strict.html" . | safeJS) }}
+{{ $targetPath := "assets/script/script-strict.csp" }}
+{{ $vars := $string | resources.FromString $targetPath }}
+{{ $secureJSS := $vars | resources.Fingerprint "sha384" }}
+<script data-no-instant>{{ $secureJSS.Content | safeJS }}</script>
+{{ $string := (partial "normal/script-dynamic.html" . | safeJS) }}
+{{ $targetPath := "assets/script/script-dynamic.csp" }}
+{{ $vars := $string | resources.FromString $targetPath }}
+{{ $secureJSD := $vars | resources.Fingerprint "sha384" }}
+<script data-instant-track>{{ $secureJSD.Content | safeJS }}</script>

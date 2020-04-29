@@ -1,0 +1,7 @@
+[build.environment]
+  HUGO_VERSION = "0.55.6"
+
+[build]
+  command = "cd site && ./hoor && cd .. && hugo --minify -d ../dist -s site -v && cd site && npm install && npm run img"
+  publish = "dist"
+

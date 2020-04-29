@@ -1,0 +1,593 @@
+backend:
+  name: git-gateway
+  branch: production
+  
+local_backend:
+  name: file-system
+  url: http://localhost:3000
+  
+media_folder: "site/content/uploads" # Folder where user uploaded files should go
+public_folder: "/uploads"
+site_url: https://feedium.net
+display_url: https://feedium.net
+# publish_mode: editorial_workflow
+
+
+collections:
+  - name: "feed"
+    label: "Feed List"
+    slug: "{{year}}-{{month}}-{{day}}-{{hour}}-{{minute}}"
+    identifier_field: "date"
+    extension: md
+    folder: "site/content/feed"
+    create: true
+    editor:
+      preview: false    
+    fields:
+      - label: "Subject"
+        name: "Subject"
+        widget: "markdown"
+        required: true      
+      - label: "Description"
+        name: "description"
+        widget: "text"
+        required: true
+      - label: "Date"
+        name: "date"
+        widget: "date"
+        format: "YYYY-MM-DD"
+        required: true
+      - label: "Section"
+        name: "section"
+        multiple: false
+        widget: "relation"
+        collection: "topic"
+        searchFields: ["name", "title"]
+        valueField: "title"
+        displayFields: ["name"]
+        required: true
+      - label: "Post Header"
+        name: "header"
+        widget: "object"
+        fields: 
+        - label: "Post cover"
+          name: "cover"
+          widget: "object"
+          fields:
+            - label: "Cover File"
+              name: "coverIMG"
+              widget: "image"
+              required: true
+              default: "/uploads/cover-default.png"          
+      - label: "Post Config [Optional]"
+        name: "config"
+        widget: "object"
+        fields: 
+        - label: "color"
+          name: "color"
+          widget: "select"
+          default: "default"
+          options:
+            - { label: "Blue"     , value: "Blue"   }
+            - { label: "Gray"     , value: "Gray"   }
+            - { label: "Teal"     , value: "Teal"   }
+            - { label: "Pink"     , value: "Pink"   }
+            - { label: "Purple"   , value: "Purple" }
+            - { label: "Green"    , value: "Green"  }
+            - { label: "Red"      , value: "Red"    }
+            - { label: "Amber"    , value: "Amber"  }
+            - { label: "Brown"    , value: "Brown"  }
+            - { label: "default"  , value: "default"}
+          required: true     
+        - label: "Post Type"
+          name: "feed"
+          widget: "hidden"
+          default: true
+      - label: "Body"
+        name: "body"
+        widget: "markdown"
+        required: true
+
+  
+  - name: "posts"
+    label: "Posts List"
+    identifier_field: title
+    preview_path: "{{fields.url}}"
+    slug: "{{fields.url}}"
+    extension: md
+    folder: "site/content/posts"
+    create: true
+    fields:
+      - label: "Title"
+        name: "title"
+        widget: "string"
+        required: true
+      - label: "Sub Title"
+        name: "subtitle"
+        widget: "string"
+        required: true
+      - label: "Description"
+        name: "description"
+        widget: "text"
+        required: true
+      - label: "Date"
+        name: "date"
+        widget: "date"
+        format: "YYYY-MM-DD"
+        required: true
+      - label: "URL"
+        name: "url"
+        widget: "string"
+        default: "posts/"  
+        required: true
+      - label: "Author"
+        name: "author"
+        multiple: false
+        widget: "relation"
+        collection: "author"
+        searchFields: ["name", "title"]
+        valueField: "title"
+        displayFields: ["name"]
+        required: true  
+      - label: "Topic Link"
+        name: "topic"
+        multiple: true
+        widget: "relation"
+        collection: "topic"
+        searchFields: ["name", "title"]
+        valueField: "title"
+        displayFields: ["name"]
+        required: true
+      - label: "Section"
+        name: "section"
+        multiple: false
+        widget: "relation"
+        collection: "topic"
+        searchFields: ["name", "title"]
+        valueField: "title"
+        displayFields: ["name"]
+        required: true
+      - label: "Post Header"
+        name: "header"
+        widget: "object"
+        fields: 
+        - label: "Post cover"
+          name: "cover"
+          widget: "object"
+          fields:
+            - label: "Cover File"
+              name: "coverIMG"
+              widget: "image"
+              required: true
+              default: "/uploads/cover-default.png"          
+            - lable: "Cover Source"
+              name: "coverSrc"
+              widget: "string"
+              required: false
+            - lable: "Cover Source Link"
+              name: "coverLnk"
+              widget: "string"
+              required: false
+        - label: "Summary"
+          name: "summary"
+          widget: "text"
+          required: true
+      - label: "Post Config [Optional]"
+        name: "config"
+        widget: "object"
+        fields: 
+        - label: "color"
+          name: "color"
+          widget: "select"
+          default: "default"
+          options:
+            - { label: "Blue"     , value: "Blue"   }
+            - { label: "Gray"     , value: "Gray"   }
+            - { label: "Teal"     , value: "Teal"   }
+            - { label: "Pink"     , value: "Pink"   }
+            - { label: "Purple"   , value: "Purple" }
+            - { label: "Green"    , value: "Green"  }
+            - { label: "Red"      , value: "Red"    }
+            - { label: "Amber"    , value: "Amber"  }
+            - { label: "Brown"    , value: "Brown"  }
+            - { label: "default"  , value: "default"}
+          required: true
+        - label: "Comment"
+          name: "comment"
+          widget: "select"
+          options: ["true", "false"]
+          default: "false"         
+        - label: "Related Section Visibility "
+          name: "related"
+          widget: "select"
+          options: ["true", "false"]
+          default: "true"
+        - label: "Post Type"
+          name: "post"
+          widget: "hidden"
+          default: true
+        - label: "Author Visibility"
+          name: "authorVisibility"
+          widget: "select"
+          options: ["true", "false"]
+          default: "true" 
+        - label: "Summary Visibility"
+          name: "summaryVisibility"
+          widget: "select"
+          options: ["true", "false"]
+          default: "true" 
+        - label: "Cover Visibility"
+          name: "coverVisibility"
+          widget: "select"
+          options: ["true", "false"]
+          default: "true"
+      - label: "Body"
+        name: "body"
+        widget: "markdown"
+        required: true
+
+  - name: "topic"
+    label: "Topics List"
+    identifier_field: name
+    slug: "{{title}}"    
+    extension: json
+    editor:
+      preview: false    
+    folder: "site/data/topic"
+    create: true
+    fields:
+      - label: "Title (latin)"
+        name: "title"
+        widget: "string"
+      - label: "Name (farsi)"
+        name: "name"
+        widget: "string"
+      - label: "Description"
+        name: "description"
+        widget: "string"
+      - label: "Page Image"
+        name: "PageImage"
+        widget: "image"
+        default: "/uploads/page-default.png"
+        required: false
+      - label: "Cover"
+        name: "Cover"
+        widget: "image"
+        required: true
+        default: "/uploads/cover-default.png"
+      - label: "Color"
+        name: "color"
+        widget: "select"
+        default: "default"
+        required: true
+        options:
+            - { label: "Blue"     , value: "Blue"   }
+            - { label: "Gray"     , value: "Gray"   }
+            - { label: "Teal"     , value: "Teal"   }
+            - { label: "Pink"     , value: "Pink"   }
+            - { label: "Purple"   , value: "Purple" }
+            - { label: "Green"    , value: "Green"  }
+            - { label: "Red"      , value: "Red"    }
+            - { label: "Amber"    , value: "Amber"  }
+            - { label: "Brown"    , value: "Brown"  }
+            - { label: "default"  , value: "default"}
+
+  - name: "author"
+    label: "Authors List"
+    identifier_field: name
+    slug: "{{title}}"
+    extension: json
+    editor:
+      preview: false    
+    folder: "site/data/author"
+    create: true
+    fields:
+      - label: "Title (latin)"
+        name: "title"
+        widget: "string"
+      - label: "Name (farsi)"
+        name: "name"
+        widget: "string"
+      - label: "Description"
+        name: "description"
+        widget: "string"
+      - label: "Avatar"
+        name: "avatar"
+        widget: "image"
+      - label: "Page Image"
+        name: "PageImage"
+        widget: "image"
+        default: "/uploads/page-default.png"
+      - label: "Cover"
+        name: "Cover"
+        widget: "image"
+        required: true
+        default: "/uploads/cover-default.png"        
+      - label: "color"
+        name: "color"
+        widget: "select"
+        default: "default"
+        required: true
+        options:
+            - { label: "Blue"     , value: "Blue"   }
+            - { label: "Gray"     , value: "Gray"   }
+            - { label: "Teal"     , value: "Teal"   }
+            - { label: "Pink"     , value: "Pink"   }
+            - { label: "Purple"   , value: "Purple" }
+            - { label: "Green"    , value: "Green"  }
+            - { label: "Red"      , value: "Red"    }
+            - { label: "Amber"    , value: "Amber"  }
+            - { label: "Brown"    , value: "Brown"  }
+            - { label: "default"  , value: "default"}
+
+
+  - name: "pages"
+    label: "Pages List"
+    identifier_field: title
+    extension: md
+    editor:
+      preview: false    
+    folder: "site/content/pages"
+    create: true
+    fields:
+      - label: "Title"
+        name: "title"
+        widget: "string"
+      - label: "URL"
+        name: "url"
+        widget: "string"        
+      - name: "header"
+        widget: "object"
+        fields: 
+        - label: "Post cover"
+          name: "cover"
+          widget: "object"
+          fields:
+            - label: "Cover File"
+              name: "coverIMG"
+              widget: "image"
+              required: true
+              default: "/uploads/cover-default.png"
+            - lable: "Cover Source"
+              name: "coverSrc"
+              widget: "string"
+              required: false
+            - lable: "Cover Source Link"
+              name: "coverLnk"
+              widget: "string"
+              required: false
+        - label: "Summary"
+          name: "summary"
+          widget: "text"
+          required: true
+      - label: "Page Config [Optional]"
+        name: "config"
+        widget: "object"
+        fields: 
+        - label: "color"
+          name: "color"
+          widget: "select"
+          default: "default"
+          options:
+            - { label: "Blue"     , value: "Blue"   }
+            - { label: "Gray"     , value: "Gray"   }
+            - { label: "Teal"     , value: "Teal"   }
+            - { label: "Pink"     , value: "Pink"   }
+            - { label: "Purple"   , value: "Purple" }
+            - { label: "Green"    , value: "Green"  }
+            - { label: "Red"      , value: "Red"    }
+            - { label: "Amber"    , value: "Amber"  }
+            - { label: "Brown"    , value: "Brown"  }
+          required: true
+        - label: "Comment"
+          name: "comment"
+          widget: "select"
+          options: ["true", "false"]
+          default: "false"
+          required: false
+        - label: "Related Section Visibility "
+          name: "related"
+          widget: "select"
+          options: ["true", "false"]
+          default: "false"
+          required: false
+        - label: "Page Type"
+          name: "page"
+          widget: "hidden"
+          default: true
+        - label: "Author Visibility"
+          name: "authorVisibility"
+          widget: "select"
+          options: ["true", "false"]
+          default: "false"
+          required: false
+        - label: "Summary Visibility"
+          name: "summaryVisibility"
+          widget: "select"
+          options: ["true", "false"]
+          default: "false"
+          required: false
+        - label: "Cover Visibility"
+          name: "coverVisibility"
+          widget: "select"
+          options: ["true", "false"]
+          default: "false"
+          required: false
+      - label: "Body"
+        name: "body"
+        widget: "markdown"
+        required: true
+
+
+  - name: "settings"
+    label: "Settings"
+    editor:
+      preview: false    
+    files:
+      - file: "site/config.toml"
+        label: "config"
+        name: "config"
+        fields:
+          - {label: "Site URL", name: baseurl, widget: string}
+          - {label: "Site Name (Short)", name: title, widget: string}
+
+          - {label: "layoutDir", name: "layoutDir", widget: "hidden", default: "layouts"}
+          - {label: "contentdir", name: "contentdir", widget: "hidden", default: "content"}
+          - {label: "assetDir", name: "assetDir", widget: "hidden", default: "static"}
+          - {label: "publishdir", name: "publishdir", widget: "hidden", default: "dist"}
+          - {label: "metaDataFormat", name: "metaDataFormat", widget: "hidden", default: "yaml"}
+          - {label: "buildDrafts", name: "buildDrafts", widget: "hidden", default: false}
+          - {label: "buildFuture", name: "buildFuture", widget: "hidden", default: true}
+          - {label: "canonifyurls", name: "canonifyurls", widget: "hidden", default: true}
+
+          - {label: "pygmentsUseClasses", name: "pygmentsUseClasses", widget: "hidden", default: true}
+          - {label: "relativeURLs", name: "relativeURLs", widget: "hidden", default: true}
+          - {label: "uglyURLs", name: "uglyURLs", widget: "hidden", default: false}
+          - {label: "verbose", name: "verbose", widget: "hidden", default: false}
+          - {label: "log", name: "log", widget: "hidden", default: false}
+          - {label: "pluralizelisttitles", name: "pluralizelisttitles", widget: "hidden", default: false}
+          - {label: "preserveTaxonomyNames", name: "preserveTaxonomyNames", widget: "hidden", default: true}
+
+          - {label: "footnotereturnlinkcontents", name: "footnotereturnlinkcontents", widget: "hidden", default: "⇆"}
+          - {label: "disableHugoGeneratorInject", name: "disableHugoGeneratorInject", widget: "hidden", default: true}
+          - {label: "enableRobotsTXT", name: "enableRobotsTXT", widget: "hidden", default: true}
+          - {label: "paginatePath", name: "paginatePath", widget: "hidden", default: "page"}
+          - {label: "enableGitInfo", name: "enableGitInfo", widget: "hidden", default: true}
+          - {label: "rssLimit", name: "rssLimit", widget: "hidden", default: 100}
+          - {label: "optimize", name: "optimize", widget: "hidden", default: true}
+          - {label: "shamsiDateFormat", name: "shamsiDateFormat", widget: "hidden", default: "d MMM ماه yyyy"}
+          - {label: "DefaultContentLanguage", name: "DefaultContentLanguage", widget: "hidden", default: "fa"}
+
+          - label: "Basic Config"
+            name: "params"
+            widget: "object"
+            fields:
+              - {label: "htmlDirection", name: htmlDirection, widget: "hidden", default: "rtl"}
+              - {label: "languageCode", name: languageCode, widget: "hidden", default: "fa-IR"}
+            
+              - {label: "Site Name (Full)", name: fullPersianName, widget: string}
+              - {label: "SEO Latin Name", name: LatinName, widget: string}
+              - {label: "SEO Description", name: description, widget: string}
+              - {label: "SEO keywords", name: tags, widget: string}
+              - {label: "SEO Cover (Default)", name: "cover", widget: "image"}
+              - {label: "Pages Cover (Default)", name: "pageCover", widget: "image"}           
+              - {label: "Copyright note", name: copyright, widget: string}
+              - {label: "Paginate", name: paginate, widget: number, default: 6, valueType: "int", min: 3, max: 24, step: 3 }
+              - label: "color"
+                name: "color"
+                widget: "select"
+                default: "darkBlue"
+                required: true
+                options:
+                  - { label: "Blue"     , value: "Blue"   }
+                  - { label: "Gray"     , value: "Gray"   }
+                  - { label: "Teal"     , value: "Teal"   }
+                  - { label: "Pink"     , value: "Pink"   }
+                  - { label: "Purple"   , value: "Purple" }
+                  - { label: "Green"    , value: "Green"  }
+                  - { label: "Red"      , value: "Red"    }
+                  - { label: "Amber"    , value: "Amber"  }
+                  - { label: "Brown"    , value: "Brown"  }
+                  - { label: "default"  , value: "default"}
+              - label: "Default Author"
+                name: "author"
+                widget: "object"
+                fields:
+                  - {label: "Name", name: name, widget: string}
+                  - {label: "Email", name: email, widget: string}
+              - label: "Manage Social"
+                name: "link"
+                widget: "object"
+                fields:
+                  - {label: "Enable Twitter link", name: twitter, widget: select, options: ["true", "false"], default: "true"}
+                  - {label: "Twitter User", name: twitterUser, widget: string}
+                  - {label: "Enable telegram link", name: telegram, widget: select, options: ["true", "false"], default: "true"}
+                  - {label: "Telegram User", name: telegramUser, widget: string}
+                  - {label: "Enable Github link", name: github, widget: select, options: ["true", "false"], default: "true"}
+                  - {label: "Github User", name: githubUser, widget: string}
+                  - {label: "Enable Facebook link", name: facebook, widget: select, options: ["true", "false"], default: "true"}
+                  - {label: "Facebook User", name: facebooUser, widget: string}
+                  - {label: "Enable Instagram link", name: instagram, widget: select, options: ["true", "false"], default: "true"}
+                  - {label: "Instagram User", name: instagramUser, widget: string}
+                  - {label: "Enable RSS link", name: rss, widget: select, options: ["true", "false"], default: "true"}                    
+                  - {label: "Enable Disqus Comment", name: comment, widget: select, options: ["true", "false"], default: "true"}
+                  - {label: "Disqus User", name: disqusUser, widget: string}
+
+                    
+                    
+                    
+          - label: "sitemap (default)"
+            name: "sitemap"
+            widget: "object"                    
+            fields:
+            - {label: "changefreq", name: "changefreq", widget: "string", default: "daily"}
+            - {label: "priority", name: "priority", widget: "string", default: 0.5}
+            - {label: "filename", name: "filename", widget: "string", default: "sitemap.xml"}
+          - label: "permalinks (default)"
+            name: "permalinks"
+            widget: "object"                    
+            fields:
+            - {label: "posts", name: "posts", widget: "hidden", default: "/posts/:title/"}
+            - {label: "feed", name: "feed", widget: "hidden", default: "/feed/:year/:month/:day"}
+
+          - label: "taxonomies (default)"
+            name: "taxonomies"
+            widget: "object"                    
+            fields:
+            - {label: "tag", name: "tag", widget: "hidden", default: "tag"}
+            - {label: "category", name: "category", widget: "hidden", default: "section"}
+            - {label: "author", name: "author", widget: "hidden", default: "author"}
+                    
+          - label: "mediaTypes (default)"
+            name: "mediaTypes"
+            widget: "object"                    
+            fields:
+            - label: "text/netlify"
+              name: "text/netlify"
+              widget: "object"                    
+              fields:
+              - {label: "delimiter", name: "delimiter", widget: "hidden", default: ""}
+                    
+          - label: "outputFormats (default)"
+            name: "outputFormats"
+            widget: "object"                    
+            fields:
+            - label: "HEADERS"
+              name: "HEADERS"
+              widget: "object"                    
+              fields:
+              - {label: "baseName", name: "baseName", widget: "hidden", default: "_headers"}
+              - {label: "isPlainText", name: "isPlainText", widget: "hidden", default: true}
+              - {label: "mediatype", name: "mediatype", widget: "hidden", default: "text/netlify"}
+              - {label: "notAlternative", name: "notAlternative", widget: "hidden", default: true}
+
+          - label: "outputs (default)"
+            name: "outputs"
+            widget: "object"                    
+            fields:
+            - label: "home"
+              name: "home"
+              widget: "hidden"
+              default: ["HTML","RSS","AMP","HEADERS"]
+            - label: "page"
+              name: "page"
+              widget: "hidden"
+              default: ["HTML","AMP"]
+            - label: "section"
+              name: "section"
+              widget: "hidden"
+              default: ["HTML","AMP"]
+            - label: "taxonomyTerm"
+              name: "taxonomyTerm"
+              widget: "hidden"
+              default: ["HTML","AMP"]
+            - label: "taxonomy"
+              name: "taxonomy"
+              widget: "hidden"
+              default: ["HTML","AMP"]                                                      
+
+          - label: "wordCount (default)"
+            name: "wordCount"
+            widget: "object"                    
+            fields:
+            - {label: "other", name: "other", widget: "hidden", default: "{{ .WordCount }} کلمه"}              

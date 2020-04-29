@@ -1,0 +1,104 @@
+<div class="tweet-frame">
+	<div class="tweet" dir='{{ .Get "dir" | default "rtl" }}' aria-hidden="true" >
+		<div class="tweet-user">
+			<a href='{{(.Get "link")}}' aria-label='{{ (.Get "user") }}' >
+				{{ $avatar := ($.Site.GetPage "section" "uploads").Resources.GetMatch (strings.TrimPrefix "/uploads/" ( printf "%s" ( .Get "avatar" | default "/uploads/avatar-default.png" ) )) }}
+				{{ $avatarResized := $avatar.Resize "48x q85" }}
+				<picture>
+					<source 
+						type="image/webp"
+						class="asyncImage tweet-user-img"
+						srcset="/assets/img/avatar.webp"
+						data-srcset='{{ replace (replace ($avatarResized.RelPermalink) ".png" ".webp") ".jpg" ".webp" }} 48w' 
+						crossorigin="anonymous"
+						alt='{{ (.Get "user") }}'
+						aria-label='{{ (.Get "user") }}'
+						aria-hidden="true" >
+					<source 
+						type="{{ $avatarResized.MediaType }}"
+						class="asyncImage tweet-user-img"
+						srcset="/assets/img/avatar.png" 
+						data-srcset='{{ $avatarResized.RelPermalink }} 48w' 
+						crossorigin="anonymous"
+						alt='{{ (.Get "user") }}'
+						aria-label='{{ (.Get "user") }}'
+						aria-hidden="true" >
+					<img 
+						class="asyncImage tweet-user-img"
+						src="/assets/img/avatar.png"
+						data-src='{{ $avatarResized.RelPermalink }}' 
+						crossorigin="anonymous"
+						alt='{{ (.Get "user") }}'
+						aria-label='{{ (.Get "user") }}'
+						aria-hidden="true" >
+				</picture>
+				<noscript>
+					<img 
+						class="asyncImage tweet-user-img loaded"
+						src='{{ $avatarResized.RelPermalink }}' 
+						crossorigin="anonymous"
+						alt='{{ (.Get "user") }}'
+						aria-label='{{ (.Get "user") }}'
+						aria-hidden="true" >					
+				</noscript>				
+			</a>
+			<a href='{{(.Get "link")}}'>
+				<div class="tweet-user-name">{{ (.Get "user") }}<span>{{ (.Get "id") }}</span></div>
+			</a>
+		</div>
+		<p class="tweet-body">
+			{{ (.Get "text") }}
+		</p>
+		{{ if ne (.Get "img") "undefined" }}
+		{{ if .Get "img" }}
+			{{ $src := ($.Site.GetPage "section" "uploads").Resources.GetMatch (strings.TrimPrefix "/uploads/" (replace (printf "%s" (.Get "img") ) "/uploads/" "") )  }}
+			{{ $lqipw := default "20x" }}
+			{{ $tinyw := default "560x" }}
+			{{ $lqip := $src.Resize $lqipw }}
+			{{ $tiny := $src.Resize $tinyw }}
+			{{ $img := imageConfig ($src.RelPermalink | printf "content/%s" ) }}
+			<picture class="with-js">
+				<source 
+					type="image/webp" 
+					class="asyncImage"
+					srcset='{{ replace (replace ($lqip.RelPermalink) ".png" ".webp") ".jpg" ".webp" }}' 
+					data-srcset='{{ replace (replace ($tiny.RelPermalink) ".png" ".webp") ".jpg" ".webp" }} 560w'
+					sizes="560px"
+					crossorigin="anonymous"
+					alt="tweet img"
+					aria-hidden="true" >
+				<source 
+					type="{{ $tiny.MediaType }}" 
+					class="asyncImage"
+					srcset='{{ $lqip.RelPermalink }}' 
+					data-srcset='{{ $tiny.RelPermalink }} 560w'
+					crossorigin="anonymous"
+					alt="tweet img"
+					aria-hidden="true" >
+				<img 
+					class="asyncImage" 
+					src="{{ $lqip.RelPermalink }}"
+					data-src='{{ $tiny.RelPermalink }}'
+					crossorigin="anonymous"
+					alt="tweet img">
+			</picture>
+			<noscript>
+			<img 
+				class="asyncImage loaded" 
+				src='{{ $tiny.RelPermalink }}'
+				crossorigin="anonymous"
+				alt="tweet img">				
+			</noscript>
+		{{ end }}
+		{{ end }}
+
+		{{ if .Get "video" }}
+		<video class="asyncImage tweet-video" {{ if .Get "poster" }}poster='{{ replace ( replace (.Get "poster") ".png" ".webp") ".jpg" ".webp" }}'{{ end }} controls>
+				<source data-src='{{ .Get "video" }}' type="video/mp4" />
+		</video>
+		{{ end }}
+		<div class="tweet-actions">
+				<div class="tweet-time">{{ .Get "date" }}</div>
+		</div>
+	</div>
+</div>

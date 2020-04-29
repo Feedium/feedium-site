@@ -1,0 +1,51 @@
+<div class="header noselect">
+    <div class="header-navbar">
+        <div class="header-top">
+            <div class="header-main">
+                    <div class="logo">
+                        <a href="{{ .Site.BaseURL }}/amp/" aria-label="Home">
+                            {{ partialCached "modules/svg/feedium.svg" . }}
+                        </a>
+                    </div>
+                    <a href="{{ .Site.BaseURL }}/posts/amp/">&nbsp;آخرین مطالب&nbsp;</a>
+                    <a href="{{ .Site.BaseURL }}/feed/amp/">&nbsp;آخرین خبرها&nbsp;</a>
+                    <a href="{{ .Site.BaseURL }}/amp/contact" class="btn">&nbsp;تماس با ما&nbsp;</a>
+            </div>
+        </div>
+        <div class="header-nav">
+            <nav class="header-menu"> 
+                <a class="header-arrow" id="navNext"><</a>
+                <ul class="scroll" id="scroll-nav">
+                    
+                    {{ range $key, $value := .Site.Taxonomies.topic }}
+                        {{ $class := "" }}
+                        {{ if eq (path.Base $.Permalink) (printf "%s" ($key | urlize))  }}
+                                {{ $class = "active" }}
+                        {{ end }}
+                        <li><a href="/topic/{{ $key | urlize  }}/amp" class="{{ $class }}">&nbsp;{{ (index $.Site.Data.topic (printf "%s" $key )).name }}&nbsp;</a></li>
+                    {{ end }}                                                          
+                </ul>
+                <a class="header-arrow"  id="navBack">></a>
+            </nav>
+        </div>
+        <div class="header-nav hide" id="nav">
+            <nav class="header-menu">
+                <div class="logo"> 
+                    <a href="{{ .Site.BaseURL }}/amp/" aria-label="Home">
+                        {{ partialCached "modules/svg/feedium.svg" . }}
+                    </a>
+                </div>
+                {{ $title := "" }}
+                {{ if eq .Data.Singular "tag" }}
+                    {{ $title = (printf "مطالب نوشته شده با موضوع %s" (index .Site.Data.topic (printf "%s" .Data.Term)).title) }}
+                {{ else if eq .Data.Singular "category" }}
+                    {{ $title = (printf "مطالب نوشته شده در بخش %s" (index .Site.Data.topic (printf "%s" .Data.Term)).name ) }}                        
+                {{ else }}
+                    {{ $title = .Title }}
+                {{ end }}                
+                <span>{{ $title }}</span>
+                {{ partial "modules/share.html" . }}
+            </nav>
+        </div>
+    </div>
+</div>

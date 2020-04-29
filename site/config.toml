@@ -1,0 +1,92 @@
+baseurl = "https://beta.feedium.net"
+title = "فیدیوم"
+layoutDir = "layouts"
+contentdir = "content"
+assetDir = "static"
+publishdir = "dist"
+metaDataFormat = "yaml"
+buildDrafts = false
+buildFuture = true
+canonifyurls = true
+pygmentsUseClasses = true
+relativeURLs = true
+uglyURLs = false
+verbose = false
+log = false
+pluralizelisttitles = false
+preserveTaxonomyNames = true
+footnotereturnlinkcontents = "⇆"
+disableHugoGeneratorInject = true
+enableRobotsTXT = true
+paginatePath = "page"
+enableGitInfo = true
+rssLimit = 100
+optimize = true
+shamsiDateFormat = "d MMM ماه yyyy"
+DefaultContentLanguage = "fa"
+
+[params]
+LatinName = "Feedium"
+color = "Pink"
+copyright = "کلیه مطالب این وبلاگ براساس گواهی کریتیو کامنز ۴.۰ (BY-NC-SA) منتشر می‌شود."
+cover = "/uploads/cover-default.png"
+description = "Params description"
+fullPersianName = "فیدیوم - تکنولوژی نجیب"
+htmlDirection = "rtl"
+languageCode = "fa-IR"
+pageCover = "/uploads/page-default.png"
+paginate = 6
+tags = "Feedium, فیدیوم"
+
+[params.author]
+email = "info@feedium.net"
+name = "Feedium"
+
+[params.link]
+comment = "false"
+disqusUser = "hilnu"
+facebooUser = "pagename"
+facebook = "false"
+github = "true"
+githubUser = "kevinmiston"
+instagram = "true"
+instagramUser = "khorakium"
+rss = "true"
+telegram = "true"
+telegramUser = "khorakium"
+twitter = "true"
+twitterUser = "khorakium"
+
+[sitemap]
+changefreq = "daily"
+filename = "sitemap.xml"
+priority = 0.5
+
+[permalinks]
+feed = "/feed/:year/:month/:day"
+posts = "/posts/:title/"
+
+[taxonomies]
+author = "author"
+category = "section"
+tag = "topic"
+
+[mediaTypes]
+
+[mediaTypes."text/netlify"]
+delimiter = ""
+
+[outputFormats]
+
+[outputFormats.HEADERS]
+baseName = "_headers"
+isPlainText = true
+mediatype = "text/netlify"
+notAlternative = true
+
+[outputs]
+home = ["HTML", "RSS", "AMP", "HEADERS"]
+page = ["HTML", "AMP"]
+section = ["HTML", "AMP"]
+taxonomy = ["HTML", "AMP"]
+taxonomyTerm = ["HTML", "AMP"]

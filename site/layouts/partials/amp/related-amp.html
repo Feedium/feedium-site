@@ -1,0 +1,65 @@
+<div class="related noselect">
+  <div class="related-content">
+    <div>
+      <div>
+        <h1>دیگر مطالب در {{ .Site.Title }}...</h1>
+        <a class="more" href="/">بیشتر</a>
+      </div>
+
+      <div class="clearfix"></div>
+      <hr>
+      <div class="related-list">
+          {{/*  {{ $related := where (.Site.RegularPages.Related . ) "Type" "posts"  }}  */}}
+
+          {{ $filteredPosts := where (where .Site.Pages "Type" "posts") ".File.UniqueID" "!= " .File.UniqueID }}
+          {{ $relatedPosts := shuffle $filteredPosts | first 6 }}
+
+          {{ range $relatedPosts }}
+          {{ if .Params.header.cover.coverIMG }}
+            {{ $resized := "null" }}
+            {{ $tiny := "null" }}
+            {{ with .Params.header.cover.coverIMG }}
+            {{ $imageResource := ($.Site.GetPage "section" "uploads").Resources.GetMatch (strings.TrimPrefix "/uploads/" . ) }}
+            {{ $resized = $imageResource.Fit "350x230" }}
+            {{ end }}
+            <span>
+              <a href="{{ .RelPermalink }}">
+                <amp-img
+                  class="asyncImage"
+                  layout="responsive"              
+                  height="230"
+                  width="350"
+                  src='{{ replace (replace ($resized.RelPermalink) ".png" ".webp") ".jpg" ".webp" }} 72w'
+                  srcset='{{ replace (replace ($resized.RelPermalink) ".png" ".webp") ".jpg" ".webp" }} 72w'
+                  alt="{{ .Params.Title }}"
+                  aria-label="{{ .Params.Title }}" 
+                  aria-hidden="true" 
+                  data-amp-auto-lightbox-disable>                
+                  <amp-img
+                    class="asyncImage"
+                    layout="responsive"                   
+                    fallback
+                    height="230"
+                    width="350"
+                    src='{{ $resized.RelPermalink }} 72w'
+                    srcset='{{ $resized.RelPermalink }} 72w'
+                    alt='{{ (index .Site.Data.author (printf "%s" .Params.author)).name }}'
+                    alt="{{ .Params.Title }}"
+                    aria-label="{{ .Params.Title }}" 
+                    aria-hidden="true" 
+                    data-amp-auto-lightbox-disable>                  
+                  </amp-img>
+                </amp-img>
+                <p>» نوشته {{ (index .Site.Data.author (printf "%s" .Params.author)).name }}
+                  در بخش {{ (index .Site.Data.topic (printf "%s" .Params.section)).name }}</p>
+                <h3>{{ .Title }}</h3>
+              </a>
+            </span>
+          {{ end }}
+          {{ end }}
+
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,175 @@
+{{ define "style" }}
+  {{ $color := .Site.Params.color }}
+  {{ if not .IsHome }}
+    {{ if eq .Data.Singular "tag" }}
+        {{ $color = (index .Site.Data.topic (printf "%s" .Data.Term)).color }}
+    {{ else if eq .Data.Singular "category" }}
+        {{ $color = (index .Site.Data.topic (printf "%s" .Data.Term)).color }}
+    {{ else if eq .Data.Singular "author" }}  
+        {{ $color = (index .Site.Data.author (printf "%s" .Data.Term)).color }}
+    {{ else }}
+      {{ $color = .Params.config.color | default .Site.Params.color }}
+    {{ end }}
+  {{ end }}
+  {{ if eq $color "default" }}{{ $color = .Site.Params.color }}{{ end }}
+  <link rel="stylesheet" href='{{.Site.BaseURL}}{{ printf "/assets/style/color/%s.css" $color }}' data-instant-track id="theme" async />
+{{ end }}
+
+
+{{ define "main" }}
+
+  <div class="main-list">
+
+    {{ $listHead := "» آخرین مطالب منتشر شده در" }}
+    {{ $listTitle := .Site.Title }}
+    {{ $listDescription := "" }}
+    {{ $PageImage := .Site.Params.pageCover  }}
+
+    <div class="main-list-cover "></div>
+    <div class="home-main">
+			<div class="banner">
+			{{ range first 1 (where .Site.Pages ".Params.config.post" "==" true) }}
+				{{ $x1100 := "null" }}
+				{{ $x800 := "null" }}
+				{{ $x500 := "null" }}
+				{{ $tinyCover := "null" }}    
+				{{ with .Params.header.cover.coverIMG }}
+					{{ $imageResource := ($.Site.GetPage "section" "uploads").Resources.GetMatch (strings.TrimPrefix "/uploads/" . ) }}
+					{{ $x1100 = $imageResource.Resize "1100x q90" }}
+					{{ $x800 = $imageResource.Resize "800x q90" }}
+					{{ $x500 = $imageResource.Resize "500x q90" }}
+					{{ $tinyCover = $imageResource.Resize "20x q20" }}
+				{{ end }}
+				{{ if ne $x1100 "null" }}
+				<div class="post-cover">
+					<div>
+						<a href="{{ .Permalink }}">
+						<noscript>
+								<img 
+								class="asyncImage loaded" 
+								src='{{ $x1100.RelPermalink }}'
+								crossorigin="anonymous"
+								aria-label="{{ .Params.Title}}"
+								alt="{{ .Params.Title}}"  >
+						</noscript>            
+						<!-- <picture class="with-js">
+							<source 
+								type="image/webp" 
+								class="asyncImage"
+								srcset='{{ replace (replace ($tinyCover.RelPermalink) ".png" ".webp") ".jpg" ".webp" }}' 
+								data-srcset='{{ replace (replace ($x1100.RelPermalink) ".png" ".webp") ".jpg" ".webp" }} 1100w, {{ replace (replace ($x800.RelPermalink) ".png" ".webp") ".jpg" ".webp" }} 800w, {{ replace (replace ($x500.RelPermalink) ".png" ".webp") ".jpg" ".webp" }} 500w'
+								sizes="(max-width: 700px) 500px, (max-width: 900px) 800px, 1100px"
+								crossorigin="anonymous"
+								alt="{{ .Params.Title}}"
+								aria-label="{{ .Params.Title}}"
+								aria-hidden="true" >
+							<source 
+								type="{{ $x1100.MediaType }}" 
+								class="asyncImage"
+								srcset='{{ $tinyCover.RelPermalink }}' 
+								data-srcset='{{ $x1100.RelPermalink }} 1100w, {{ $x800.RelPermalink }} 800w, {{ $x500.RelPermalink }} 500w'
+								sizes="(max-width: 700px) 500px, (max-width: 900px) 800px, 1100px"
+								crossorigin="anonymous"
+								alt="{{ .Params.Title}}"
+								aria-label="{{ .Params.Title}}"
+								aria-hidden="true" >
+							<img 
+								class="asyncImage" 
+								src="{{ $tinyCover.RelPermalink }}"
+								data-src='{{ $x1100.RelPermalink }}'
+								crossorigin="anonymous"
+								aria-label="{{ .Params.Title}}"
+								alt="{{ .Params.Title}}"  >
+						</picture> -->
+
+						<picture class="with-js">
+							<source 
+								type="image/webp" 
+								class="asyncImage"
+								srcset='{{ $tinyCover.RelPermalink }}' 
+								data-srcset='{{ $x1100.RelPermalink }} 1100w, {{ $x800.RelPermalink }} 800w, {{ $x500.RelPermalink }} 500w'
+								sizes="(max-width: 700px) 500px, (max-width: 900px) 800px, 1100px"
+								crossorigin="anonymous"
+								alt="{{ .Params.Title}}"
+								aria-label="{{ .Params.Title}}"
+								aria-hidden="true" >
+							<source 
+								type="{{ $x1100.MediaType }}" 
+								class="asyncImage"
+								srcset='{{ $tinyCover.RelPermalink }}' 
+								data-srcset='{{ $x1100.RelPermalink }} 1100w, {{ $x800.RelPermalink }} 800w, {{ $x500.RelPermalink }} 500w'
+								sizes="(max-width: 700px) 500px, (max-width: 900px) 800px, 1100px"
+								crossorigin="anonymous"
+								alt="{{ .Params.Title}}"
+								aria-label="{{ .Params.Title}}"
+								aria-hidden="true" >
+							<img 
+								class="asyncImage" 
+								src="{{ $tinyCover.RelPermalink }}"
+								data-src='{{ $x1100.RelPermalink }}'
+								crossorigin="anonymous"
+								aria-label="{{ .Params.Title}}"
+								alt="{{ .Params.Title}}"  >
+						</picture>
+						<span><h1>{{ .Title }}</h1></span>
+						</a>
+					</div>
+				</div>
+				{{ end }}
+			{{ end }}
+
+				<div class="recent-post">
+				{{ range first 3 (after 1 (where .Site.Pages ".Params.config.post" "==" true)) }}
+					<a href="{{ .Permalink }}">
+						<span>{{ partial "modules/svg/date.svg" . }} <strong class="date">{{ .Params.shamsiDate }}</strong></span>
+						<h2>{{ .Title }}</h2>
+					</a>
+				{{ end}}
+				</div>
+			</div>
+			<hr/>
+
+			<div class="recent-feed-list">
+				<h1 class="t-c">آخرین خبرها</h1>
+				{{ range first 3  (where .Site.Pages ".Params.config.feed" "==" true) }}
+				<a href="{{ .Permalink }}">
+						<span>{{ partial "modules/svg/date.svg" . }} <strong class="date">{{ .Params.shamsiDate }}</strong></span>
+						<p>{{ .Params.subject }}</p>
+				</a>
+				{{ end }}
+			</div>
+			<hr>
+
+      {{ $paginator := .Paginate (where .Site.Pages ".Params.config.post" "==" true)  (index .Site.Params "paginate" | default 6) }}
+      <div class="home-list">
+      	{{ range $paginator.Pages.ByDate.Reverse  }}
+        <a class="item" href="{{ .Permalink }}">
+					{{ $x500 := "null" }}
+					{{ $tinyCover := "null" }}    
+					{{ with .Params.header.cover.coverIMG }}
+						{{ $imageResource := ($.Site.GetPage "section" "uploads").Resources.GetMatch (strings.TrimPrefix "/uploads/" . ) }}
+						{{ $x500 = $imageResource.Fill "750x900" }}
+						{{ $tinyCover = $imageResource.Resize "20x q20" }}
+					{{ end }}
+					<img 
+						class="asyncImage" 
+						src='{{ $x500.RelPermalink }}'
+						data-src='{{ $x500.RelPermalink }}'
+						crossorigin="anonymous"
+						aria-label="{{ .Params.Title}}"
+						alt="{{ .Params.Title}}"  />
+          <h2>{{ .Title }}</h2>
+          <!-- <span>{{ partial "modules/svg/date.svg" . }} <strong class="date">{{ .Params.shamsiDate }}</strong></span> -->
+          <!-- <p>{{ .Params.header.summary | truncate 320 }}</p> -->
+        </a>
+				{{ end }}
+			</div>
+
+
+
+
+    </div>
+  </div>
+
+  
+{{ end }}

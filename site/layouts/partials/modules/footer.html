@@ -1,0 +1,68 @@
+<div class="footer noselect">
+    <nav class="footer-nav">
+        <p></p>
+        <ul>
+            <li><a href='{{ .Site.BaseURL }}{{ if in .Permalink "/amp/" }}/amp/about{{ else }}/about{{ end }}'>&nbsp;درباره ما&nbsp;</a></li>
+            <li><a href='{{ .Site.BaseURL }}{{ if in .Permalink "/amp/" }}/amp/contact{{ else }}/contact{{ end }}'>&nbsp;تماس با ما&nbsp;</a></li>
+            <li><a href='{{ .Site.BaseURL }}{{ if in .Permalink "/amp/" }}/amp/privacy{{ else }}/privacy{{ end }}'>&nbsp;حریم خصوصی&nbsp;</a></li>
+            <li><a href='{{ .Site.BaseURL }}{{ if in .Permalink "/amp/" }}/amp/copyright{{ else }}/copyright{{ end }}'>&nbsp;بازنشر&nbsp;</a></li>
+        </ul>                
+    </nav>
+    <div class="footer-logo">
+        {{ partialCached "modules/svg/feedium.svg" . }}
+    </div>
+    <nav class="footer-link">
+        <ul>
+            {{ if .Site.Params.link.github }}
+            <li>
+                <a href="https://github.com/{{ .Site.Params.link.githubUser }}" class="social-icon" rel="noopener noreferrer" aria-label="Github" aria-hidden="true"  target="_blank">
+                    {{ partialCached "modules/svg/github.svg" . }}
+                </a>                
+            </li>
+            {{ end }}
+            {{ if .Site.Params.link.twitter }}
+            <li>
+                <a href="https://twitter.com/{{ .Site.Params.link.twitterUser }}" class="social-icon" rel="noopener noreferrer" aria-label="twitter" aria-hidden="true"  target="_blank">
+                    {{ partialCached "modules/svg/twitter.svg" . }}
+                </a>                
+            </li>
+            {{ end }}
+            {{ if .Site.Params.link.telegram }}
+            <li>
+                <a href="https://t.me/{{ .Site.Params.link.telegramUser }}" class="social-icon" rel="noopener noreferrer" aria-label="Telegram" aria-hidden="true"  target="_blank">
+                    {{ partialCached "modules/svg/telegram.svg" . }}
+                </a>                
+            </li>
+            {{ end }}
+            {{ if .Site.Params.link.instagram }}
+            <li>
+                <a href="https://instagram.com/{{ .Site.Params.link.instagramUser }}" class="social-icon" rel="noopener noreferrer" aria-label="Instagram" aria-hidden="true"  target="_blank">
+                    {{ partialCached "modules/svg/instagram.svg" . }}
+                </a>                
+            </li>
+            {{ end }}
+            {{ if .Site.Params.link.facebook }}
+            <li>
+                <a href="https://facebook.com/{{ .Site.Params.link.facebookUser }}" class="social-icon" rel="noopener noreferrer" aria-label="Facebook" aria-hidden="true"  target="_blank">
+                    {{ partialCached "modules/svg/facebook.svg" . }}
+                </a>                
+            </li>
+            {{ end }}            
+            {{ if .Site.Params.link.rss }}
+            <li>
+                <a href="{{ .Site.BaseURL }}/index.xml" class="social-icon" rel="noopener noreferrer" aria-label="RSS Feed" aria-hidden="true"  target="_blank">
+                    {{ partialCached "modules/svg/rss.svg" . }}
+                </a>                
+            </li>
+            {{ end }}            
+
+        </ul>
+        <div class="last-build">
+            <span>{{ now.Format "2006-01-02T15:04:03Z" }} </span>
+            <span>{{ if .GitInfo }}{{.GitInfo.Hash }}{{ end }}</span>           
+        </div>
+    </nav>
+    <div class="footer-note">
+        <p class="footer-copyright">{{ .Site.Params.copyright }}</p> 
+    </div>
+</div>

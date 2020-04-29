@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html amp lang="{{ .Site.Params.languageCode }}" dir="{{ .Site.Params.htmlDirection }}">
+<head>
+  {{ partial "amp/head-amp.html" . }}
+</head>
+<body class="{{if eq .Kind `page` }}single{{else}}list{{end}}">
+  {{ partial "amp/nav-amp.html" . }}
+
+  <div class="main p-b-100">
+    <div class="main-head">
+      <div class="cleafix"></div>
+      <div class="main-title t-c">
+        <h1 class="post-title">{{ .Title }}</h1>
+        <h3 class="post-subtitle"></h3>        
+      </div>
+    </div>
+    <div class="main-content" id="content">
+      <div class="content-share none">
+          {{ partial "modules/share.html" . }}
+      </div>
+      {{ .Content }}
+    </div>
+  </div>  
+  
+  {{ if eq .Params.config.related "true"}}
+  {{ partial "amp/related-amp.html" . }}
+  {{ end }}
+  {{ partial "modules/footer.html" .}}
+  <amp-install-serviceworker 
+    src="{{ .Site.BaseURL }}/amp/sw.js"
+    data-iframe-src="https://amp.dev/sw.html"
+    layout="nodisplay">
+  </amp-install-serviceworker>
+</body>
+</html>
+  

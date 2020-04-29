@@ -1,0 +1,26 @@
+{{ define "style" }}
+{{ $color := .Params.config.color | default .Site.Params.color }}
+{{ if eq $color "default" }}{{ $color = .Site.Params.color }}{{ end }}
+<link rel="stylesheet" href='{{.Site.BaseURL}}{{ printf "/assets/style/color/%s.css" $color }}' data-instant-track id="theme" async />
+{{ end }}
+
+{{ define "main" }}
+  <div class="main p-b-100">
+    <div class="main-head">
+      <div class="cleafix"></div>
+      <div class="main-title t-c">
+        <h1 class="post-title">{{ .Title }}</h1>
+        <h3 class="post-subtitle"></h3>        
+      </div>
+    </div>
+    <div class="main-content" id="content">
+      <div class="content-share none">
+          {{ partial "modules/share.html" . }}
+      </div>
+      {{ .Content }}
+    </div>
+  </div>
+  {{ if eq .Params.config.related "true" }}
+  {{ partial "normal/related.html" . }}
+  {{ end }}
+{{ end }}

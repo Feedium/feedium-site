@@ -1,0 +1,12 @@
+{{ $string := "body{display: none;}" | safeCSS }}
+{{ $targetPath := "assets/style/style.csp" }}
+{{ $vars := $string | resources.FromString $targetPath }}
+{{ $secureCSS := $vars | resources.Fingerprint "sha256" }}
+<style id="critical" nonce="{{ $secureCSS.Data.Integrity | md5 }}">body{display: none;}</style>
+{{ $css := resources.Get (printf "%s" .Site.Data.webpack.main.css ) | resources.Minify }}
+{{ with $css }}
+{{ $secureCSS := . | resources.Fingerprint "sha384" }}
+<noscript><link href='{{ $css.Permalink }}?v={{ printf "%s" $secureCSS.Data.Integrity | md5 | safeHTML }}' type="text/css" rel="stylesheet"></noscript>
+{{end}}
+
+<!-- <link type="text/css" id="mainStyle" href="/assets/style/normal/main.css" crossorigin="use-credentials" data-no-instant="" rel="stylesheet"> -->

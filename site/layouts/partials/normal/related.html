@@ -1,0 +1,78 @@
+<div class="related noselect">
+    <div class="related-content">
+        <div>
+            <div>
+                <h1>دیگر مطالب در {{ .Site.Title }}...</h1>
+                <a class="more" href="/">بیشتر</a>
+            </div>
+
+            <div class="clearfix"></div>
+            <hr>
+            <div class="related-list">
+            {{/*  {{ $related := shuffle (where .Site.Pages "Type" "posts") | first 6  }}  */}}
+
+						{{ $filteredPosts := where (where .Site.Pages "Type" "posts") ".File.UniqueID" "!= " .File.UniqueID }}
+						{{ $relatedPosts := shuffle $filteredPosts | first 6 }}
+
+            {{ range $relatedPosts }}
+            {{ if .Params.header.cover.coverIMG }}
+							{{ $resized := "null" }}
+							{{ $tiny := "null" }}
+							{{ with .Params.header.cover.coverIMG }}
+							{{ $imageResource := ($.Site.GetPage "section" "uploads").Resources.GetMatch (strings.TrimPrefix "/uploads/" . ) }}
+							{{ $resized = $imageResource.Fill "350x230 Center" }}
+							{{ $tiny = $imageResource.Fill "3x2 Center" }}
+							{{ end }}
+							<span>
+								<a href="{{ .RelPermalink }}">
+									<noscript>
+										<img 
+											class="asyncImage loaded" 
+											src='{{ $resized.RelPermalink }}'
+											crossorigin="anonymous"
+											aria-label="{{ .Params.Title}}"
+											alt="{{ .Params.Title}}"  >											
+									</noscript>									
+									<picture class="with-js">
+										<source 
+											type="image/webp" 
+											class="asyncImage"
+											srcset='{{ replace (replace ($tiny.RelPermalink) ".png" ".webp") ".jpg" ".webp" }}' 
+											data-srcset='{{ replace (replace ($resized.RelPermalink) ".png" ".webp") ".jpg" ".webp" }} 350w'
+											sizes="350px"
+											crossorigin="anonymous"
+											alt="{{ .Params.Title}}"
+											aria-label="{{ .Params.Title}}"
+											aria-hidden="true" >
+										<source 
+											type="{{ $resized.MediaType }}" 
+											class="asyncImage"
+											srcset='{{ $tiny.RelPermalink }}' 
+											data-srcset='{{ $resized.RelPermalink }} 350w'
+											sizes="350px"
+											crossorigin="anonymous"
+											alt="{{ .Params.Title}}"
+											aria-label="{{ .Params.Title}}"
+											aria-hidden="true" >
+										<img 
+											class="asyncImage" 
+											src="{{ $tiny.RelPermalink }}"
+											data-src='{{ $resized.RelPermalink }}'
+											crossorigin="anonymous"
+											aria-label="{{ .Params.Title}}"
+											alt="{{ .Params.Title}}"  >
+									</picture>									
+									<p>» نوشته {{ (index .Site.Data.author (printf "%s" .Params.author)).name }}
+											در بخش {{ (index .Site.Data.topic (printf "%s" .Params.section)).name }}</p>
+									<h3>{{ .Title }}</h3>
+								</a>
+							</span>
+            {{ end }}
+            {{ end }}
+
+            {{/*  {{ end }}  */}}
+            </div>
+        </div>
+            
+    </div>
+</div>

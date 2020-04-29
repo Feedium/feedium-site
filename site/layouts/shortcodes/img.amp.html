@@ -1,0 +1,54 @@
+{{/* get file that matches the filename as specified as src="" in shortcode */}}
+{{/*  {{ $src := .Page.Resources.GetMatch (printf "%s" (.Get "src")) }}  */}}
+{{ $src := ($.Site.GetPage "section" "uploads").Resources.GetMatch (strings.TrimPrefix "/uploads/" (replace (.Get "src") "/uploads/" "") )  }}
+
+
+{{/*  {{ $imageResource := ($.Site.GetPage "section" "uploads").Resources.GetMatch (strings.TrimPrefix "/uploads/" . ) }}
+{{ $resized = $imageResource.Fill "350x230 Center" }}  */}}
+
+{{/* set image sizes, these are hardcoded for now, x dictates that images are resized to this width */}}
+
+{{ $lqipw := default "20x" }}
+{{ $tinyw := default "500x" }}
+{{ $smallw := default "800x" }}
+{{ $mediumw := default "1100x" }}
+{{ $largew := default "1500x" }}
+
+{{/* resize the src image to the given sizes */}}
+
+{{ $lqip := $src.Resize $lqipw }}
+{{ $tiny := $src.Resize $tinyw }}
+{{ $small := $src.Resize $smallw }}
+{{ $medium := $src.Resize $mediumw }}
+{{ $large := $src.Resize $largew }}
+
+{{/* only use images smaller than or equal to the src (original) image size, as Hugo will upscale small images */}}
+{{/* set the sizes attribute to (min-width: 35em) 1200px, 100vw unless overridden in shortcode */}}
+
+{{ $img := imageConfig (replace $src.RelPermalink "amp/" "" | printf "content/%s" ) }}
+
+<div class='asyncImage {{ (.Get "class") }}'>
+  <amp-img 
+    layout="responsive"
+    data-sizes="auto"
+    width="{{ $img.Width }}" height="{{ $img.Height }}"                 
+    src='{{ replace (replace ($medium.RelPermalink) ".png" ".webp") ".jpg" ".webp" }}' 
+    srcset='{{ if ge $src.Width "500" }}{{ with $tiny.RelPermalink }}{{ replace (replace (.) ".png" ".webp") ".jpg" ".webp" }} 500w,{{ end }}{{ end }} {{ if ge $src.Width "800" }}{{ with $small.RelPermalink }}{{ replace (replace (.) ".png" ".webp") ".jpg" ".webp" }} 800w,{{ end }}{{ end }} {{ if ge $src.Width "1200" }}{{ with $medium.RelPermalink }}{{ replace (replace (.) ".png" ".webp") ".jpg" ".webp" }} 1100w{{ end }}{{ end }} {{ if ge $src.Width "1500" }}{{ with $large.RelPermalink }}, {{ replace (replace (.) ".png" ".webp") ".jpg" ".webp" }} 1500w {{ end }}{{ end }}'
+    {{ with .Get "alt" }}
+    alt='{{.}}'
+    {{ end }}>
+    <amp-img
+      fallback
+      layout="responsive"
+      data-sizes="auto"
+      width="{{ $img.Width }}" height="{{ $img.Height }}" 
+      src="{{ $medium.RelPermalink }}" 
+      srcset='{{ if ge $src.Width "500" }}{{ with $tiny.RelPermalink }}{{.}} 500w,{{ end }}{{ end }} {{ if ge $src.Width "800" }}{{ with $small.RelPermalink }}{{.}} 800w,{{ end }}{{ end }} {{ if ge $src.Width "1200" }}{{ with $medium.RelPermalink }}{{.}} 1100w{{ end }}{{ end }} {{ if ge $src.Width "1500" }}{{ with $large.RelPermalink }}, {{.}} 1500w {{ end }}{{ end }}'      
+      {{ with .Get "alt" }}
+      alt='{{.}}'
+      {{ end }}>
+    </amp-img>
+  </amp-img>
+
+
+</div>

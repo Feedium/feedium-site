@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html amp lang="{{ .Site.Params.languageCode }}" dir="{{ .Site.Params.htmlDirection }}">
+<head>
+  {{ partial "amp/head-amp.html" . }}
+</head>
+
+<body class="list">
+  {{ partial "amp/nav-amp.html" . }}
+
+  <div class="main-list">
+
+    {{ $listHead := "» آخرین مطالب منتشر شده در" }}
+    {{ $listTitle := .Site.Title }}
+    {{ $listDescription := "" }}
+    {{ $PageImage := .Site.Params.pageCover  }}
+
+    {{ if not .IsHome }}
+      {{ if eq .Data.Singular "tag" }}
+        {{ $listHead = "» مطالب نوشته شده با موضوع" }}
+        {{ $listTitle = (index .Site.Data.topic (printf "%s" .Data.Term)).name }}
+        {{ $listDescription = (index .Site.Data.topic (printf "%s" .Data.Term)).description }}
+        {{ $PageImage = (index .Site.Data.topic (printf "%s" .Data.Term)).PageImage }}
+
+      {{ else if eq .Data.Singular "category" }}
+        {{ $listHead = "» مطالب نوشته شده در بخش" }}
+        {{ $listTitle = (index .Site.Data.topic (printf "%s" .Data.Term)).name }}
+        {{ $listDescription = (index .Site.Data.topic (printf "%s" .Data.Term)).description }}
+        {{ $PageImage = (index .Site.Data.topic (printf "%s" .Data.Term)).PageImage }}
+
+      {{ else if eq .Data.Singular "author" }}
+        {{ $listHead = "» مطالب نوشته شده توسط" }}
+        {{ $listTitle = (index .Site.Data.author (printf "%s" .Data.Term)).name }}
+        {{ $listDescription = (index .Site.Data.author (printf "%s" .Data.Term)).description }}
+        {{ $PageImage = (index .Site.Data.author (printf "%s" .Data.Term)).PageImage }}
+
+      {{ end }}
+    {{ end }}    
+
+    {{ $SiteTitle := .Site.Title }}
+
+    {{ range first 1 .Pages }}
+    {{ with .Params.section }}
+    {{ $imageResource := ($.Site.GetPage "section" "uploads").Resources.GetMatch (strings.TrimPrefix "/uploads/" ($PageImage) ) }}
+    {{ $resizedCover := $imageResource.Resize "400x q20" }}
+    {{ $tinyCover := $imageResource.Resize "10x" }}
+    <div class="main-list-cover ">
+      <div class="asyncImage">
+        <amp-img 
+          src='{{ replace ( replace ($resizedCover.RelPermalink) ".png" ".webp" ) ".jpg" ".webp" }}'
+          alt="{{ $SiteTitle }}" 
+          layout="responsive" 
+          height="500"
+          width="1100" data-amp-auto-lightbox-disable>
+          <amp-img 
+            fallback
+            src="{{ $resizedCover.RelPermalink }}" 
+            alt="{{ $SiteTitle }}" 
+            layout="responsive" 
+            height="500"
+            width="1100" data-amp-auto-lightbox-disable>
+          </amp-img>
+        </amp-img>
+      </div>
+    </div>
+    {{ end }}
+    {{ end }}
+
+    <div class="main-list-head noselect">
+      <div class="cleafix">
+      </div>
+      <div class="main-list-title">
+        <div class="list-subtitle">
+          <h3>{{ $listHead }}</h3>
+        </div>
+        <h1 class="list-title">{{ $listTitle }}</h1>
+      </div>
+    </div>
+    <div class="main-list-content">
+      {{ $paginator := .Paginate (where .Site.Pages ".Params.config.post" "=" true)  (index .Site.Params "paginate" | default 6) }}
+
+      {{ range $paginator.Pages.ByDate.Reverse  }}
+      <div class="post-list">
+        <a href="{{ .Permalink }}">
+          <h1>{{ .Title }}</h1>
+          <span>{{ partial "modules/svg/date.svg" . }} <strong class="date">{{ .Params.shamsiDate }}</strong></span>
+          <p>{{ .Params.header.summary | truncate 320 }}</p>
+        </a>
+        <a href="{{ .Permalink }}" class="btn">ادامه {{ partial "modules/svg/arrow-right.svg" . }}</a>
+      </div>
+      {{ end }}
+    </div>
+    {{ if gt $paginator.TotalPages 1 }}
+    <div class="main-list-pagination">
+      <div class="list-pagination">
+        <div class="next">
+          {{ if $paginator.HasPrev }}
+          <a class="btn"
+            href="{{ $paginator.Prev.URL }}">{{ partial "modules/svg/arrow-right.svg" . }}{{ partial "modules/svg/arrow-right.svg" . }}</a>
+          {{ end }}
+        </div>
+        <div class="back">
+          {{ if $paginator.HasNext }}
+          <a class="btn"
+            href="{{ $paginator.Next.URL }}">{{ partial "modules/svg/arrow-right.svg" . }}{{ partial "modules/svg/arrow-right.svg" . }}</a>
+          {{ end }}
+        </div>
+      </div>
+    </div>
+    {{ end }}
+  </div>
+
+
+  {{ partial "modules/footer.html" .}}
+
+  <amp-install-serviceworker src="{{ .Site.BaseURL }}/amp/sw.js" data-iframe-src="https://amp.dev/sw.html"
+    layout="nodisplay">
+  </amp-install-serviceworker>
+
+</body>
+
+</html>

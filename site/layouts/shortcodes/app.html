@@ -1,0 +1,52 @@
+<div class="tweet-frame">
+        <div class="tweet">
+            <div class="tweet-user t-c">
+                <a href='{{(.Get "link")}}' >
+                    {{ $avatar := ($.Site.GetPage "section" "uploads").Resources.GetMatch (strings.TrimPrefix "/uploads/" ( printf "%s" ( .Get "avatar" | default "/uploads/avatar-default.png" ) )) }}
+                    {{ $avatarResized := $avatar.Resize "256x q85" }}
+                    <picture>
+                        <source 
+                            type="image/webp"
+                            class="asyncImage app-preview"
+                            srcset="/assets/img/avatar.webp"
+                            data-srcset='{{ replace (replace ($avatarResized.RelPermalink) ".png" ".webp") ".jpg" ".webp" }} 256w' 
+                            crossorigin="anonymous"
+                            alt='{{ (.Get "user") }}'
+                            aria-label='{{ (.Get "user") }}'
+                            aria-hidden="true" >
+                        <source 
+                            type="{{ $avatarResized.MediaType }}"
+                            class="asyncImage app-preview"
+                            srcset="/assets/img/avatar.png" 
+                            data-srcset='{{ $avatarResized.RelPermalink }} 256w' 
+                            crossorigin="anonymous"
+                            alt='{{ (.Get "user") }}'
+                            aria-label='{{ (.Get "user") }}'
+                            aria-hidden="true" >
+                        <img 
+                            class="asyncImage app-preview"
+                            src="/assets/img/avatar.png"
+                            data-src='{{ $avatarResized.RelPermalink }}' 
+                            crossorigin="anonymous"
+                            alt='{{ (.Get "user") }}'
+                            aria-label='{{ (.Get "user") }}'
+                            aria-hidden="true" >
+                    </picture>
+                    <noscript>
+                        <img 
+                            class="asyncImage  loaded app-preview"
+                            src='{{ $avatarResized.RelPermalink }}' 
+                            crossorigin="anonymous"
+                            alt='{{ (.Get "user") }}'
+                            aria-label='{{ (.Get "user") }}'
+                            aria-hidden="true" >					
+                    </noscript>				
+                </a>
+                <a href='{{(.Get "link")}}'>
+                    <div class="tweet-user-name"><span>{{ (.Get "name") }}</span></div>
+                </a>
+            </div>
+
+        </div>
+    </div>
+    

@@ -1,0 +1,9 @@
+{
+  "title": "default-author",
+  "name": "پیش‌فرض",
+  "description": "توضیحات نویسنده پیش‌فرض",
+  "avatar": "/uploads/avatar-default.png",
+  "PageImage": "/uploads/page-default.png",
+  "Cover": "/uploads/cover-default.png",
+  "color": "default"
+}

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html amp lang="{{ .Site.Params.languageCode }}" dir="{{ .Site.Params.htmlDirection }}">
+<head>
+  {{ partial "amp/head-amp.html" . }}
+</head>
+<body class="single">
+  {{ partial "amp/nav-amp.html" . }}
+  <div class="main">
+    <div class="main-head">
+      <div class="cleafix"></div>
+      <div class="main-title">
+        <h1 class="post-title">{{ .Title }}</h1>
+        <h3 class="post-subtitle">{{ .Params.subtitle }}</h3>
+        {{ if eq .Params.config.authorVisibility "true" }}
+        {{ $avatarImageResource := ($.Site.GetPage "section" "uploads").Resources.GetMatch (strings.TrimPrefix "/uploads/" (index .Site.Data.author (printf "%s" .Params.author) ).avatar) }}
+        {{ $avatarResized := $avatarImageResource.Resize "72x q85" }}
+        <div class="post-author ">
+          <div>
+            <div class="avatar">
+               <amp-img
+                class="asyncImage"
+                layout="responsive"              
+                width="64"
+                height="64"
+                src='{{ replace (replace ($avatarResized.RelPermalink) ".png" ".webp") ".jpg" ".webp" }} 72w'
+                srcset='{{ replace (replace ($avatarResized.RelPermalink) ".png" ".webp") ".jpg" ".webp" }} 72w'
+                alt='{{ (index .Site.Data.author (printf "%s" .Params.author)).name }}'
+                aria-label='{{ (index .Site.Data.author (printf "%s" .Params.author)).name }}' 
+                aria-hidden="true" 
+                data-amp-auto-lightbox-disable>                
+                <amp-img
+                  class="asyncImage"
+                  layout="responsive"                   
+                  fallback
+                  width="64"
+                  height="64"
+                  src='{{ $avatarResized.RelPermalink }} 72w'
+                  srcset='{{ $avatarResized.RelPermalink }} 72w'
+                  alt='{{ (index .Site.Data.author (printf "%s" .Params.author)).name }}'
+                  aria-label='{{ (index .Site.Data.author (printf "%s" .Params.author)).name }}' 
+                  aria-hidden="true" 
+                  data-amp-auto-lightbox-disable>                  
+                </amp-img>
+              </amp-img>
+            </div>                  
+            <span>
+              <p><strong>{{ (index .Site.Data.author (printf "%s" .Params.author)).name }}</strong></p>
+              <p class="date">{{ .Params.shamsiDate }}</p>
+            </span>
+          </div>    
+        </div>
+        {{ end }}
+        {{ if eq .Params.config.summaryVisibility "true" }}
+        <div class="post-summary">
+          <p>{{ .Params.header.summary }}</p>
+        </div>
+        {{ end }}
+
+        {{ if eq .Params.config.coverVisibility "true" }}
+        {{ $x1100 := "null" }}
+        {{ $x800 := "null" }}
+        {{ $x500 := "null" }}
+        {{ $tinyCover := "null" }}    
+        {{ with .Params.header.cover.coverIMG }}
+          {{ $imageResource := ($.Site.GetPage "section" "uploads").Resources.GetMatch (strings.TrimPrefix "/uploads/" . ) }}
+          {{ $x1100 = $imageResource.Fill "1100x700 center" }}
+          {{ $x800 = $imageResource.Fill "800x509 center" }}
+          {{ $x500 = $imageResource.Fill "500x318 center" }}
+        
+        {{ end }}
+        {{ if ne $x1100 "null" }}
+        <div class="post-cover">
+          <div>
+
+            
+            <amp-img 
+              class="asyncImage" 
+              layout="responsive"
+              height="700"
+              width="1100"                    
+              src='{{ replace (replace ($x1100.RelPermalink) ".png" ".webp") ".jpg" ".webp" }}' 
+              srcset='{{ replace (replace ($x1100.RelPermalink) ".png" ".webp") ".jpg" ".webp" }} 1100w, {{ replace (replace ($x800.RelPermalink) ".png" ".webp") ".jpg" ".webp" }} 800w, {{ replace (replace ($x500.RelPermalink) ".png" ".webp") ".jpg" ".webp" }} 500w'
+              alt="{{ .Params.Title}}"
+              aria-label="{{ .Params.Title}}">
+              <amp-img
+                fallback
+                class="asyncImage" 
+                layout="responsive"
+                height="700"
+                width="1100"                    
+                src="{{ $x1100.RelPermalink }}" 
+                srcset='{{ $x1100.RelPermalink }} 1100w, {{ $x800.RelPermalink }} 800w, {{ $x500.RelPermalink }} 500w'
+                alt="{{ .Params.Title}}"
+                aria-label="{{ .Params.Title}}">
+              </amp-img>
+            </amp-img>
+            {{ if .Params.header.cover.coverSrc }}
+            <span><a href="{{ .Params.header.cover.coverLnk }}">{{ .Params.header.cover.coverSrc }}</a></span>
+            {{ end }}
+          </div>
+        </div>
+        {{ end }}
+        {{ end }}
+        <div class="normal-view">
+          <a class="btn" href="{{ replace .Permalink "/amp/"  "/" }}">نمایش مطلب در حالت استاندارد</a>
+        </div>            
+      </div>
+    </div>
+    <div class="main-content" id="content">
+      <div class="content-share">
+          {{ partial "modules/share.html" . }}
+      </div>
+      {{ .Content }}
+    </div>
+    <div class="main-footer">
+      {{ if .Params.topic }}
+      <div class="main-footer-tagline">
+        <div>
+          {{/*  {{ partial "modules/svg/folder.svg" . }}  */}}
+          <ul class="footer-tags">
+            {{ range .Params.topic }}
+            <li><a href="{{$.Site.BaseURL}}/topic/{{ . | urlize }}/amp">#{{ (index $.Site.Data.topic (printf "%s" . )).name }}</a></li>
+            {{ end }}                               
+          </ul>
+        </div>
+      </div>
+      {{ end }}
+
+    </div>
+  </div>
+  {{ if eq .Params.config.related "true"}}
+  {{ partial "amp/related-amp.html" . }}
+  {{ end }}
+  {{ partial "modules/footer.html" .}}
+  <amp-install-serviceworker 
+    src="{{ .Site.BaseURL }}/amp/sw.js"
+    data-iframe-src="https://amp.dev/sw.html"
+    layout="nodisplay">
+  </amp-install-serviceworker>
+</body>
+</html>
+  
