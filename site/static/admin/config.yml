@@ -77,6 +77,7 @@ collections:
             - { label: "Red"      , value: "Red"    }
             - { label: "Amber"    , value: "Amber"  }
             - { label: "Brown"    , value: "Brown"  }
+            - { label: "MainBlue"    , value: "MainBlue"  }
             - { label: "default"  , value: "default"}
           required: true     
         - label: "Post Type"
@@ -190,6 +191,7 @@ collections:
             - { label: "Red"      , value: "Red"    }
             - { label: "Amber"    , value: "Amber"  }
             - { label: "Brown"    , value: "Brown"  }
+            - { label: "MainBlue"    , value: "MainBlue"  }
             - { label: "default"  , value: "default"}
           required: true
         - label: "Comment"
@@ -270,6 +272,7 @@ collections:
             - { label: "Red"      , value: "Red"    }
             - { label: "Amber"    , value: "Amber"  }
             - { label: "Brown"    , value: "Brown"  }
+            - { label: "MainBlue"    , value: "MainBlue"  }
             - { label: "default"  , value: "default"}
 
   - name: "author"
@@ -318,6 +321,7 @@ collections:
             - { label: "Red"      , value: "Red"    }
             - { label: "Amber"    , value: "Amber"  }
             - { label: "Brown"    , value: "Brown"  }
+            - { label: "MainBlue"    , value: "MainBlue"  }
             - { label: "default"  , value: "default"}
 
 
@@ -377,6 +381,7 @@ collections:
             - { label: "Green"    , value: "Green"  }
             - { label: "Red"      , value: "Red"    }
             - { label: "Amber"    , value: "Amber"  }
+            - { label: "MainBlue"    , value: "MainBlue"  }
             - { label: "Brown"    , value: "Brown"  }
           required: true
         - label: "Comment"
@@ -488,6 +493,7 @@ collections:
                   - { label: "Red"      , value: "Red"    }
                   - { label: "Amber"    , value: "Amber"  }
                   - { label: "Brown"    , value: "Brown"  }
+                  - { label: "MainBlue"    , value: "MainBlue"  }
                   - { label: "default"  , value: "default"}
               - label: "Default Author"
                 name: "author"
