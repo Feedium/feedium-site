@@ -43,19 +43,19 @@ email = "info@feedium.net"
 name = "Feedium"
 
 [params.link]
-comment = "false"
-disqusUser = "hilnu"
+comment = "true"
+disqusUser = "feedium"
 facebooUser = "pagename"
 facebook = "false"
 github = "true"
 githubUser = "feedium"
-instagram = "true"
+instagram = "false"
 instagramUser = "khorakium"
 rss = "true"
 telegram = "true"
 telegramUser = "khorakium"
 twitter = "true"
-twitterUser = "khorakium"
+twitterUser = "feediumdotnet"
 
 [sitemap]
 changefreq = "daily"
