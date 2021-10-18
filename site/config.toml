@@ -27,7 +27,7 @@ DefaultContentLanguage = "fa"
 
 [params]
 LatinName = "Feedium"
-color = "MainBlue"
+color = "Blue"
 copyright = "کلیه مطالب این وبلاگ براساس گواهی کریتیو کامنز ۴.۰ (BY-NC-SA) منتشر می‌شود."
 cover = "/uploads/cover-default.png"
 description = "Params description"
