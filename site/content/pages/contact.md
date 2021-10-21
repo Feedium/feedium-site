@@ -3,7 +3,7 @@ title: تماس با ما
 url: contact
 header:
   cover:
-    coverIMG: /uploads/cover-default.png
+    coverIMG: /uploads/cover2.png
   summary: توضیحات بخش تماس با ما
 config:
   authorVisibility: 'false'
