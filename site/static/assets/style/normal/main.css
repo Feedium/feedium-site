@@ -778,6 +778,8 @@ img[src=""] {
     filter: blur(5px);
     transform: scale(1.05);
     transition: filter ease .1s,transform ease .1s, width ease .5s, maxwidth ease .5s;
+    align-self: center;
+    justify-self: center;
 }
 .post-cover .loaded {
     width: 100%;
@@ -1679,6 +1681,8 @@ img[src=""] {
 }
 .home-list .item {
     text-align: center;
+    align-self: center;
+    justify-self: center;
     /* max-width: 330px;
     margin: auto; */
 }
