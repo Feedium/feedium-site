@@ -20,7 +20,7 @@
   X-Content-Type-Options: nosniff
   Referrer-Policy: no-referrer
   Feature-Policy: accelerometer 'none'; camera 'none'; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; payment 'none'; usb 'none'
-  X-Support: https://hilnu.com
+  X-Support: https://feedium.net
   Link: <https://d33wubrfki0l68.cloudfront.net> rel=preconnect crossorigin; </assets/style/normal/main.min.css> rel=preload as=script; </assets/js/main.min.js> rel=preload as=script;</assets/fonts/vazir/vazir-bold.woff2> rel=preload as=fonts; </assets/fonts/vazir/vazir.woff2> rel=preload as=fonts; </assets/fonts/sahel/sahel-semibold.woff2> rel=preload as=fonts;
 
   Content-Security-Policy: base-uri 'self'; default-src 'none'; script-src 'self' 'strict-dynamic' '{{ $secureJSD.Data.Integrity }}' '{{ $secureJSS.Data.Integrity }}'; style-src 'self' 'nonce-{{ $secureCSS.Data.Integrity | md5 }}' https://c.disquscdn.com; font-src 'self' data: https://d33wubrfki0l68.cloudfront.net; worker-src 'self'; img-src 'self' data: https://d33wubrfki0l68.cloudfront.net https://c.disquscdn.com https://referrer.disqus.com https://i.ytimg.com; connect-src 'self' https://d33wubrfki0l68.cloudfront.net; media-src 'self' https://d33wubrfki0l68.cloudfront.net; manifest-src 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; frame-src 'self' https://disqus.com https://www.youtube-nocookie.com; upgrade-insecure-requests; block-all-mixed-content;
