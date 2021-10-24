@@ -39,7 +39,7 @@ paginate = 6
 tags = "Feedium, فیدیوم"
 
 [params.author]
-email = "info@feedium.net"
+email = "admin@feedium.net"
 name = "Feedium"
 
 [params.link]
