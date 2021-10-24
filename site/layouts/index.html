@@ -148,7 +148,7 @@
 					{{ $tinyCover := "null" }}    
 					{{ with .Params.header.cover.coverIMG }}
 						{{ $imageResource := ($.Site.GetPage "section" "uploads").Resources.GetMatch (strings.TrimPrefix "/uploads/" . ) }}
-						{{ $x500 = $imageResource.Fill "750x900" }}
+						{{ $x500 = $imageResource.Fill "750x900 Center" }}
 						{{ $tinyCover = $imageResource.Resize "20x q20" }}
 					{{ end }}
 					<img 
