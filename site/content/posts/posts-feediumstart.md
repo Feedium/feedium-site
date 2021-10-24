@@ -21,9 +21,9 @@ header:
     استناد و گاه ترکیبی از هر دو مورد در زمینه‌های اقتصادی، فرهنگی، اجتماعی،
     روانشناختی و … باشه.
 config:
-  authorVisibility: 'false'
+  authorVisibility: 'true'
   color: default
-  comment: 'false'
+  comment: 'true'
   coverVisibility: 'true'
   post: true
   related: 'true'
