@@ -12,8 +12,8 @@ date: '2022-01-16'
 url: posts/hootanlovestech
 author: baraary
 topic:
-  - site
-section: site
+  - personal
+section: personal
 header:
   cover:
     coverIMG: /uploads/techlove.jpg
