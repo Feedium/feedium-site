@@ -7,7 +7,7 @@ description: >-
   در نهایت، افرادی که مشکلات اون رو پذیرفتن و تلاش می‌کنن خوبی‌ها و بدی‌هاش رو
   در کنار هم ببینن. من در دسته آخر قرار دارم، واسه همین به نظرم رسید نوشتن یک
   «خوب، بد، زشت» برای آخرین نسخه سیستم‌عامل مایکروسافت ایده خوبی باشه.
-date: '2021-10-26'
+date: '2022-01-05'
 url: posts/GBUW11
 author: baraary
 topic:
@@ -25,7 +25,7 @@ header:
     باشه.
 config:
   authorVisibility: 'true'
-  color: default
+  color: Gray
   comment: 'true'
   coverVisibility: 'true'
   post: true
